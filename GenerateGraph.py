@@ -3,15 +3,12 @@ import openai
 import re
 from PyPDF2 import PdfReader
 
-# Configure your API key
 openai.api_key_path= './key.txt'
 
-# Directory of PDFs
 pdf_dir = "./Sammet"
 output_dir = "./SammetRDF2"
 os.makedirs(output_dir, exist_ok=True)
 
-# Define your RDF data model prompt
 data_model_prompt = """
 You are an RDF converter. 
 Given the text of a document, extract key entities and relationships 
