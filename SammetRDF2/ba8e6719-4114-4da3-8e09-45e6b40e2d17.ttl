@@ -1,0 +1,184 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+:person_jean_sammet a :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+:person_afips a :Institution ;
+  :hasDisplayName "AFIPS (American Federation of Information Processing Societies)" .
+
+:person_cbf a :Institution ;
+  :hasDisplayName "Charles Babbage Foundation (CBF)" .
+
+:person_arthur_norberg a :Person ;
+  :hasDisplayName "Arthur Norberg" .
+
+:person_gwen_bell a :Person ;
+  :hasDisplayName "Gwen Bell" .
+
+:person_michael_harrison a :Person ;
+  :hasDisplayName "Michael Harrison" .
+
+:loc_rockefeller a :Location ;
+  :hasLocationName "Rockefeller University" .
+
+:role_afips_rep a :Role ; :hasRoleName "AFIPS representative to CBF Board" .
+:role_represented_org a :Role ; :hasRoleName "represented organization" .
+:role_receiving_org a :Role ; :hasRoleName "receiving organization (CBF Board)" .
+:role_participant a :Role ; :hasRoleName "participant" .
+:role_advocate_archives a :Role ; :hasRoleName "advocated for building an archive" .
+:role_host_venue a :Role ; :hasRoleName "venue/host location" .
+:role_critic a :Role ; :hasRoleName "critic of bibliography" .
+:role_criticized a :Role ; :hasRoleName "criticized person" .
+:role_outgoing_rep a :Role ; :hasRoleName "outgoing AFIPS representative to CBF Board" .
+:role_incoming_rep a :Role ; :hasRoleName "incoming AFIPS representative to CBF Board" .
+
+:dr_1978 a :DateRange ;
+  :hasTextualDescription "1978" .
+
+:dr_late70s a :DateRange ;
+  :hasTextualDescription "late 1970s (first CBF board meeting after Norberg took the post)" .
+
+:dr_late70s_early80s a :DateRange ;
+  :hasTextualDescription "late 1970s to early 1980s" .
+
+:dr_by_fifth_year a :DateRange ;
+  :hasTextualDescription "By the fifth year of AFIPS funding to CBF (circa early/mid-1980s)" .
+
+:dr_early80s_after1981 a :DateRange ;
+  :hasTextualDescription "early 1980s (after the 1981 DEC meeting)" .
+
+:source_oh1 a :Source ;
+  :hasSourceID "doc-1" ;
+  :hasSourceName "Interview: Arthur Norberg with William Aspray (excerpt)" .
+
+:cit_p43_45 a :SourceCitation ;
+  :fromSource :source_oh1 ;
+  :hasPlaceInSource "pp. 43–45" .
+
+:cit_p45 a :SourceCitation ;
+  :fromSource :source_oh1 ;
+  :hasPlaceInSource "p. 45" .
+
+:cit_p53 a :SourceCitation ;
+  :fromSource :source_oh1 ;
+  :hasPlaceInSource "p. 53" .
+
+:cit_p57_58 a :SourceCitation ;
+  :fromSource :source_oh1 ;
+  :hasPlaceInSource "pp. 57–58" .
+
+# Factoid 1: Early CBF board meeting where AFIPS reps (including Sammet) pressed for building an archive
+:fact_cbf_first_board_meeting a :EventFactoid ;
+  :hasEventName "Early CBF board meeting where AFIPS representatives (incl. Jean Sammet) pressed for building an archive" ;
+  :occurredOn :dr_late70s ;
+  :sourcedFrom :cit_p43_45 ;
+  :hasReference :ref_sammet_meeting, :ref_afips_meeting, :ref_cbf_meeting .
+
+:ref_sammet_meeting a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :referencesPerson :person_jean_sammet ;
+  :hasRole :role_afips_rep, :role_advocate_archives .
+
+:ref_afips_meeting a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "AFIPS" ;
+  :referencesPerson :person_afips ;
+  :hasRole :role_represented_org .
+
+:ref_cbf_meeting a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "CBF Board" ;
+  :referencesPerson :person_cbf ;
+  :hasRole :role_receiving_org .
+
+# Factoid 2: Sammet served as AFIPS representative to the CBF Board (office/state of affairs)
+:fact_sammet_afips_rep a :OfficeFactoid ;
+  :dateForAssertion :dr_late70s_early80s ;
+  :sourcedFrom :cit_p43_45 ;
+  :hasReference :ref_sammet_office, :ref_afips_office, :ref_cbf_office .
+
+:ref_sammet_office a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :referencesPerson :person_jean_sammet ;
+  :hasRole :role_afips_rep .
+
+:ref_afips_office a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "AFIPS" ;
+  :referencesPerson :person_afips ;
+  :hasRole :role_represented_org .
+
+:ref_cbf_office a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "CBF Board" ;
+  :referencesPerson :person_cbf ;
+  :hasRole :role_receiving_org .
+
+# Factoid 3: Sammet attended the first trustees meeting in 1978 at Rockefeller University
+:fact_trustees_1978_rockefeller a :EventFactoid ;
+  :hasEventName "First trustees meeting at Rockefeller University" ;
+  :occurredOn :dr_1978 ;
+  :sourcedFrom :cit_p53 ;
+  :hasReference :ref_sammet_trustees, :ref_loc_rockefeller .
+
+:ref_sammet_trustees a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :referencesPerson :person_jean_sammet ;
+  :hasRole :role_participant .
+
+:ref_loc_rockefeller a :LocationReference ;
+  :hasNameInSourceAs "Rockefeller University" ;
+  :referencesLocation :loc_rockefeller ;
+  :hasRole :role_host_venue .
+
+# Factoid 4: Computer Museum meeting where Sammet (with Gwen Bell) criticized Norberg's bibliography
+:fact_computer_museum_critique a :EventFactoid ;
+  :hasEventName "Computer Museum meeting where Sammet and Gwen Bell criticized Norberg's bibliography" ;
+  :occurredOn :dr_early80s_after1981 ;
+  :sourcedFrom :cit_p57_58 ;
+  :hasReference :ref_sammet_critic, :ref_gwen_critic, :ref_norberg_criticized .
+
+:ref_sammet_critic a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "Sammet" ;
+  :referencesPerson :person_jean_sammet ;
+  :hasRole :role_critic .
+
+:ref_gwen_critic a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "Gwen Bell" ;
+  :referencesPerson :person_gwen_bell ;
+  :hasRole :role_critic .
+
+:ref_norberg_criticized a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "Norberg" ;
+  :referencesPerson :person_arthur_norberg ;
+  :hasRole :role_criticized .
+
+# Factoid 5: Replacement of AFIPS representative on CBF Board (Sammet out; Michael Harrison in)
+:fact_afips_rep_replacement a :EventFactoid ;
+  :hasEventName "Replacement of AFIPS representative on CBF Board (Sammet replaced by Michael Harrison)" ;
+  :occurredOn :dr_by_fifth_year ;
+  :sourcedFrom :cit_p45 ;
+  :hasReference :ref_sammet_outgoing, :ref_harrison_incoming, :ref_afips_replacement, :ref_cbf_replacement .
+
+:ref_sammet_outgoing a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "Sammet" ;
+  :referencesPerson :person_jean_sammet ;
+  :hasRole :role_outgoing_rep .
+
+:ref_harrison_incoming a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "Michael Harrison" ;
+  :referencesPerson :person_michael_harrison ;
+  :hasRole :role_incoming_rep .
+
+:ref_afips_replacement a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "AFIPS" ;
+  :referencesPerson :person_afips ;
+  :hasRole :role_represented_org .
+
+:ref_cbf_replacement a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "CBF Board" ;
+  :referencesPerson :person_cbf ;
+  :hasRole :role_receiving_org .

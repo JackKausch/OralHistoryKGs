@@ -1,0 +1,32 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Jean_Sammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+:Role_Author a :Role ;
+  :hasRoleName "Author" .
+
+:Ref_JS_Author a :ReferenceAsSubject ;
+  :referencesPerson :Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_Author .
+
+:Date_1968 a :Date ;
+  :hasYear 1968 .
+
+:DR_1968 a :DateRangeTEI ;
+  :isFrom :Date_1968 ;
+  :isTo :Date_1968 .
+
+:Source_Doc1 a :Source ;
+  :hasSourceName "Corpus Document" .
+
+:SourceCitation_Doc1 a :SourceCitation ;
+  :fromSource :Source_Doc1 .
+
+:Factoid_JS_1968 a :EventFactoid ;
+  :hasEventName "Authored a work on the history of programming languages (published 1968)" ;
+  :occurredOn :DR_1968 ;
+  :hasReference :Ref_JS_Author ;
+  :sourcedFrom :SourceCitation_Doc1 .

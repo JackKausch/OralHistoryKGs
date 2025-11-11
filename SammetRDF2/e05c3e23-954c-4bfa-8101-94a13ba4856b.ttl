@@ -1,0 +1,213 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+#################################################################
+# Persons, Groups, Locations
+#################################################################
+
+:person_JeanSammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+:person_CarlHammer a :MalePerson ;
+  :hasDisplayName "Carl Hammer" .
+
+:person_Ross a :Person ;
+  :hasDisplayName "Ross" .
+
+:inst_Sperry a :Institution ;
+  :hasDisplayName "Sperry" .
+
+:loc_LongIsland a :Location ;
+  :hasLocationName "Long Island" .
+
+#################################################################
+# Source and citations
+#################################################################
+
+:src1 a :FRBRSource ;
+  :hasSourceID "SRC1" ;
+  :hasSourceName "Interview transcript (excerpt) re: Mobidic and early warning system" ;
+  :hasBibliographicEntry "Interview dialogue between Carl Hammer and Ross (excerpt containing remarks on Jean Sammet and the Mobidic project)." .
+
+:cit1 a :SourceCitation ;
+  :fromSource :src1 ;
+  :hasPlaceInSource "HAMMER: The person in charge of that software group was Jean Sammet." .
+
+:cit2 a :SourceCitation ;
+  :fromSource :src1 ;
+  :hasPlaceInSource "HAMMER: Whom I hired away from Sperry. She was at Sperry, Long Island." .
+
+:cit3 a :SourceCitation ;
+  :fromSource :src1 ;
+  :hasPlaceInSource "HAMMER: ...and so she worked with me out there for about 2 years." .
+
+:cit4 a :SourceCitation ;
+  :fromSource :src1 ;
+  :hasPlaceInSource "HAMMER: Oh, we did the whole software package... We wrote an operating system, we wrote compilers, assemblers, sort-merge, whole bunch of utilities..." .
+
+:cit5 a :SourceCitation ;
+  :fromSource :src1 ;
+  :hasPlaceInSource "HAMMER: ...she's the only daughter of a pair of lawyers. Her mother was admitted to the bar and her father and mother both were highly respected lawyers." .
+
+#################################################################
+# Roles
+#################################################################
+
+:role_software_group_lead a :Role ; :hasRoleName "software group leader" .
+:role_project_context a :Role ; :hasRoleName "project context" .
+
+:role_hiree a :Role ; :hasRoleName "hiree" .
+:role_hiring_manager a :Role ; :hasRoleName "hiring manager" .
+:role_former_employer a :Role ; :hasRoleName "former employer" .
+:role_employment_location a :Role ; :hasRoleName "employment location" .
+
+:role_employee a :Role ; :hasRoleName "employee" .
+:role_manager a :Role ; :hasRoleName "manager" .
+
+:role_software_developer a :Role ; :hasRoleName "software developer" .
+:role_os_dev a :Role ; :hasRoleName "operating system developer" .
+:role_compiler_dev a :Role ; :hasRoleName "compiler developer" .
+:role_assembler_dev a :Role ; :hasRoleName "assembler developer" .
+:role_sortmerge_dev a :Role ; :hasRoleName "sort-merge developer" .
+:role_utilities_dev a :Role ; :hasRoleName "utilities developer" .
+
+:role_daughter a :Role ; :hasRoleName "daughter" .
+:role_mother_lawyer a :Role ; :hasRoleName "mother (lawyer)" .
+:role_father_lawyer a :Role ; :hasRoleName "father (lawyer)" .
+:role_bar_admitted a :Role ; :hasRoleName "admitted to the bar" .
+
+#################################################################
+# Date ranges (where stated/implied)
+#################################################################
+
+:dr_about2years a :DateRange ;
+  :hasTextualDescription "about 2 years" .
+
+#################################################################
+# References used in factoids
+#################################################################
+
+# Factoid 1 (software group lead on Mobidic)
+:ref1_js a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_software_group_lead .
+
+:ref1_proj a :Reference ;
+  :hasNameInSourceAs "Mobidic project" ;
+  :hasRole :role_project_context .
+
+# Factoid 2 (hired away from Sperry by Hammer; located on Long Island)
+:ref2_js a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_hiree .
+
+:ref2_hammer a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "HAMMER" ;
+  :referencesPerson :person_CarlHammer ;
+  :hasRole :role_hiring_manager .
+
+:ref2_sperry a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "Sperry" ;
+  :referencesPerson :inst_Sperry ;
+  :hasRole :role_former_employer .
+
+:ref2_loc a :LocationReference ;
+  :hasNameInSourceAs "Long Island" ;
+  :referencesLocation :loc_LongIsland ;
+  :hasRole :role_employment_location .
+
+# Factoid 3 (worked with Hammer about 2 years)
+:ref3_js a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "she" ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_employee .
+
+:ref3_hammer a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "me" ;
+  :referencesPerson :person_CarlHammer ;
+  :hasRole :role_manager .
+
+:ref3_proj a :Reference ;
+  :hasNameInSourceAs "out there (Mobidic project context)" ;
+  :hasRole :role_project_context .
+
+# Factoid 4 (software development work on Mobidic)
+:ref4_js a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "she / we (team incl. Jean Sammet)" ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_software_developer , :role_os_dev , :role_compiler_dev , :role_assembler_dev , :role_sortmerge_dev , :role_utilities_dev .
+
+:ref4_proj a :Reference ;
+  :hasNameInSourceAs "Mobidic project" ;
+  :hasRole :role_project_context .
+
+# Factoid 5 (family: daughter of two lawyers; mother and father)
+:person_JeanMother a :FemalePerson ;
+  :hasDisplayName "Mother of Jean Sammet" .
+
+:person_JeanFather a :MalePerson ;
+  :hasDisplayName "Father of Jean Sammet" .
+
+:ref5_js a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "she" ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_daughter .
+
+:ref5_mother a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "her mother" ;
+  :referencesPerson :person_JeanMother ;
+  :hasRole :role_mother_lawyer .
+
+:ref5_father a :ReferenceAsObject, :PersonReference ;
+  :hasNameInSourceAs "her father" ;
+  :referencesPerson :person_JeanFather ;
+  :hasRole :role_father_lawyer .
+
+# Factoid 6 (mother admitted to the bar)
+:ref6_mother a :ReferenceAsSubject, :PersonReference ;
+  :hasNameInSourceAs "her mother" ;
+  :referencesPerson :person_JeanMother ;
+  :hasRole :role_bar_admitted .
+
+#################################################################
+# Factoids (Assertions)
+#################################################################
+
+# 1) Jean Sammet led the software group on the Mobidic project.
+:fact1_office_MobidicSWLead a :OfficeFactoid ;
+  :hasReference :ref1_js , :ref1_proj ;
+  :sourcedFrom :cit1 .
+
+# 2) Jean Sammet was hired away from Sperry by Carl Hammer (Sperry on Long Island).
+:fact2_rel_HiredFromSperry a :RelationshipFactoid ;
+  :hasReference :ref2_js , :ref2_hammer , :ref2_sperry , :ref2_loc ;
+  :sourcedFrom :cit2 .
+
+# 3) Jean Sammet worked with Carl Hammer for about 2 years on the Mobidic project.
+:fact3_rel_WorkedWithHammer a :RelationshipFactoid ;
+  :hasReference :ref3_js , :ref3_hammer , :ref3_proj ;
+  :dateForAssertion :dr_about2years ;
+  :sourcedFrom :cit3 .
+
+# 4) Jean Sammet did software development on Mobidic (OS, compilers, assemblers, sort-merge, utilities).
+:fact4_occ_SoftwareWorkMobidic a :OccupationFactoid ;
+  :hasReference :ref4_js , :ref4_proj ;
+  :sourcedFrom :cit4 .
+
+# 5) Jean Sammet is the daughter of two lawyers (mother and father).
+:fact5_rel_DaughterOfLawyers a :RelationshipFactoid ;
+  :hasReference :ref5_js , :ref5_mother , :ref5_father ;
+  :sourcedFrom :cit5 .
+
+# 6) Jean Sammet’s mother was admitted to the bar.
+:fact6_status_MotherBarAdmission a :StatusFactoid ;
+  :hasReference :ref6_mother ;
+  :sourcedFrom :cit5 .

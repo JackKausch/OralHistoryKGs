@@ -1,0 +1,173 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix ex: <http://example.org/fpo/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Persons and institutions
+ex/Jean_Sammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+ex/Carl_Hammer a :Person ;
+  :hasDisplayName "Carl Hammer" .
+
+ex/Sperry a :Institution ;
+  :hasDisplayName "Sperry" .
+
+# Location
+ex/Long_Island a :Location ;
+  :hasLocationName "Long Island" .
+
+# Source and citation
+ex/Source_Doc1 a :Source ;
+  :hasSourceName "Oral history interview with Carl Hammer (excerpt)" ;
+  :hasSourceID "doc1" ;
+  :hasBibliographicEntry "Interview excerpt mentioning MOBIDIC project; speakers: ROSS and HAMMER; undated excerpt, pp. 42, 52." .
+
+ex/SourceCite_Doc1 a :SourceCitation ;
+  :fromSource ex/Source_Doc1 ;
+  :hasPlaceInSource "pp. 42, 52" .
+
+# Common date ranges mentioned
+ex/DR_Mobidic_Approx a :DateRange ;
+  :hasTextualDescription "circa late 1950s; MOBIDIC project period; Sammet worked about two years on the project" .
+
+ex/DR_Pre_Mobidic a :DateRange ;
+  :hasTextualDescription "before joining the MOBIDIC project (mid/late 1950s)" .
+
+# Roles
+ex/Role_Head_SW_Group a :Role ; :hasRoleName "Head of software group (MOBIDIC project)" .
+ex/Role_Employee a :Role ; :hasRoleName "Employee" .
+ex/Role_Employer a :Role ; :hasRoleName "Employer" .
+ex/Role_Work_Location a :Role ; :hasRoleName "Work location" .
+ex/Role_Hiree a :Role ; :hasRoleName "Hiree (hired away from previous employer)" .
+ex/Role_HiringManager a :Role ; :hasRoleName "Hiring manager" .
+ex/Role_PreviousEmployer a :Role ; :hasRoleName "Previous employer" .
+ex/Role_Software_Lead_Developer a :Role ; :hasRoleName "Lead developer (operating system, compilers, assemblers, sort-merge, utilities)" .
+ex/Role_Project_Lead a :Role ; :hasRoleName "Project lead/co-developer" .
+ex/Role_OnlyDaughter a :Role ; :hasRoleName "Only daughter" .
+ex/Role_Mother a :Role ; :hasRoleName "Mother" .
+ex/Role_Father a :Role ; :hasRoleName "Father" .
+ex/Role_Lawyer a :Role ; :hasRoleName "Lawyer" .
+ex/Role_BarAdmit a :Role ; :hasRoleName "Admitted to the bar" .
+ex/Role_Respected a :Role ; :hasRoleName "Highly respected lawyer" .
+ex/Role_DocumentationAffinity a :Role ; :hasRoleName "Strong affinity for documentation; keeps extensive files" .
+ex/Role_Possessor a :Role ; :hasRoleName "Possessor" .
+
+# Factoid 1: Sammet was in charge of the MOBIDIC software group (office/position)
+ex/Office_MOBIDIC_SW_Lead a :OfficeFactoid ;
+  :sourcedFrom ex/SourceCite_Doc1 ;
+  :dateForAssertion ex/DR_Mobidic_Approx ;
+  :hasReference ex/Ref_JS_OfficeMobidic .
+
+ex/Ref_JS_OfficeMobidic a :ReferenceAsSubject ;
+  :referencesPerson ex/Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex/Role_Head_SW_Group .
+
+# Factoid 2: Sammet previously worked at Sperry (Long Island)
+ex/Occupation_Sperry a :OccupationFactoid ;
+  :sourcedFrom ex/SourceCite_Doc1 ;
+  :dateForAssertion ex/DR_Pre_Mobidic ;
+  :hasReference ex/Ref_JS_Sperry , ex/Ref_Sperry_Employer , ex/Ref_LongIsland .
+
+ex/Ref_JS_Sperry a :ReferenceAsSubject ;
+  :referencesPerson ex/Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex/Role_Employee .
+
+ex/Ref_Sperry_Employer a :ReferenceAsObject ;
+  :referencesPerson ex/Sperry ;
+  :hasNameInSourceAs "Sperry" ;
+  :hasRole ex/Role_Employer .
+
+ex/Ref_LongIsland a :LocationReference ;
+  :referencesLocation ex/Long_Island ;
+  :hasNameInSourceAs "Long Island" ;
+  :hasRole ex/Role_Work_Location .
+
+# Factoid 3: Sammet was hired by Carl Hammer away from Sperry
+ex/Rel_Hired_By_Hammer a :RelationshipFactoid ;
+  :sourcedFrom ex/SourceCite_Doc1 ;
+  :dateForAssertion ex/DR_Mobidic_Approx ;
+  :hasReference ex/Ref_JS_Hiree , ex/Ref_Hammer_HiringManager , ex/Ref_Sperry_PrevEmployer .
+
+ex/Ref_JS_Hiree a :ReferenceAsSubject ;
+  :referencesPerson ex/Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex/Role_Hiree .
+
+ex/Ref_Hammer_HiringManager a :ReferenceAsObject ;
+  :referencesPerson ex/Carl_Hammer ;
+  :hasNameInSourceAs "Carl Hammer" ;
+  :hasRole ex/Role_HiringManager .
+
+ex/Ref_Sperry_PrevEmployer a :ReferenceAsObject ;
+  :referencesPerson ex/Sperry ;
+  :hasNameInSourceAs "Sperry" ;
+  :hasRole ex/Role_PreviousEmployer .
+
+# Factoid 4: Sammet co-developed the MOBIDIC software suite (event)
+ex/Event_MOBIDIC_Software_Development a :EventFactoid ;
+  :hasEventName "Development of the MOBIDIC software suite" ;
+  :occurredOn ex/DR_Mobidic_Approx ;
+  :sourcedFrom ex/SourceCite_Doc1 ;
+  :hasReference ex/Ref_JS_Developer , ex/Ref_Hammer_Developer .
+
+ex/Ref_JS_Developer a :ReferenceAsSubject ;
+  :referencesPerson ex/Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex/Role_Software_Lead_Developer .
+
+ex/Ref_Hammer_Developer a :ReferenceAsObject ;
+  :referencesPerson ex/Carl_Hammer ;
+  :hasNameInSourceAs "Carl Hammer" ;
+  :hasRole ex/Role_Project_Lead .
+
+# Factoid 5: Sammet is the only daughter of two lawyers (family background)
+ex/personMotherJS a :FemalePerson ;
+  :hasDisplayName "Mother of Jean Sammet" .
+
+ex/personFatherJS a :MalePerson ;
+  :hasDisplayName "Father of Jean Sammet" .
+
+ex/Rel_OnlyDaughter a :RelationshipFactoid ;
+  :sourcedFrom ex/SourceCite_Doc1 ;
+  :hasReference ex/Ref_JS_Daughter , ex/Ref_Mother_Lawyer , ex/Ref_Father_Lawyer .
+
+ex/Ref_JS_Daughter a :ReferenceAsSubject ;
+  :referencesPerson ex/Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex/Role_OnlyDaughter .
+
+ex/Ref_Mother_Lawyer a :ReferenceAsObject ;
+  :referencesPerson ex/personMotherJS ;
+  :hasNameInSourceAs "her mother" ;
+  :hasRole ex/Role_Mother , ex/Role_Lawyer , ex/Role_BarAdmit .
+
+ex/Ref_Father_Lawyer a :ReferenceAsObject ;
+  :referencesPerson ex/personFatherJS ;
+  :hasNameInSourceAs "her father" ;
+  :hasRole ex/Role_Father , ex/Role_Lawyer , ex/Role_Respected .
+
+# Factoid 6: Sammet’s reputation/affinity for documentation (status)
+ex/Status_DocumentationAffinity a :StatusFactoid ;
+  :sourcedFrom ex/SourceCite_Doc1 ;
+  :hasReference ex/Ref_JS_DocLover .
+
+ex/Ref_JS_DocLover a :ReferenceAsSubject ;
+  :referencesPerson ex/Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex/Role_DocumentationAffinity .
+
+# Factoid 7: Sammet’s possession of extensive documentation
+ex/Docs_Possession a :NongeographicalPossession ;
+  :hasPossessionName "Extensive technical documentation (including unclassified MOBIDIC materials)" .
+
+ex/Possession_Docs a :PossessionFactoid ;
+  :sourcedFrom ex/SourceCite_Doc1 ;
+  :hasReference ex/Ref_JS_Possessor ;
+  :assertsPossessionOf ex/Docs_Possession .
+
+ex/Ref_JS_Possessor a :ReferenceAsSubject ;
+  :referencesPerson ex/Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex/Role_Possessor .

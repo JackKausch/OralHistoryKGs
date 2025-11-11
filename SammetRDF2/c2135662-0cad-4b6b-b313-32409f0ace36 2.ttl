@@ -1,0 +1,38 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@prefix ex: <http://example.org/fpo/> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+# Person
+ex:person_JeanSammet rdf:type :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+# Roles
+ex:role_OpposerPictureClause rdf:type :Role ;
+  :hasRoleName "opposed inclusion of the PICTURE clause in COBOL" .
+
+# References
+ex:ref_JeanSammet_OpposerPictureClause rdf:type :ReferenceAsSubject ;
+  :referencesPerson ex:person_JeanSammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role_OpposerPictureClause .
+
+# Source and citation (page marker observed as 38 in the excerpt)
+ex:source_doc1 rdf:type :Source ;
+  :hasSourceName "Corpus document (unspecified)" .
+
+ex:citation_doc1_p38 rdf:type :SourceCitation ;
+  :fromSource ex:source_doc1 ;
+  :hasPlaceInSource "p. 38" .
+
+# Factoid: Jean Sammet opposed inclusion of the COBOL PICTURE clause
+ex:factoid_OppositionToPictureClause rdf:type :RelationshipFactoid ;
+  :hasReference ex:ref_JeanSammet_OpposerPictureClause ;
+  :sourcedFrom ex:citation_doc1_p38 .

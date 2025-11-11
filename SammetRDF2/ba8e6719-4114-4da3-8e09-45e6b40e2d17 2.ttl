@@ -1,0 +1,166 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix ex: <http://example.org/fpo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Persons, organizations, locations
+ex:person/jean-sammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+ex:person/norberg a :Person ;
+  :hasDisplayName "Norberg" .
+
+ex:org/afips a :Institution ;
+  :hasDisplayName "AFIPS" .
+
+ex:org/cbf a :Institution ;
+  :hasDisplayName "Charles Babbage Foundation (CBF)" .
+
+ex:location/rockefeller-university a :Location ;
+  :hasLocationName "Rockefeller University" .
+
+# Roles used in references
+ex:role/afips-representative a :Role ;
+  :hasRoleName "AFIPS representative to CBF Board of Trustees" .
+
+ex:role/board-trustees a :Role ;
+  :hasRoleName "board/trustees" .
+
+ex:role/attendee a :Role ;
+  :hasRoleName "attendee/trustee" .
+
+ex:role/venue a :Role ;
+  :hasRoleName "venue" .
+
+ex:role/critic a :Role ;
+  :hasRoleName "critic" .
+
+ex:role/target a :Role ;
+  :hasRoleName "target of criticism" .
+
+ex:role/represented-institution a :Role ;
+  :hasRoleName "represented institution" .
+
+ex:role/host-organization a :Role ;
+  :hasRoleName "host organization" .
+
+ex:role/advocate a :Role ;
+  :hasRoleName "advocate for building an archive" .
+
+# Dates and date ranges
+ex:date/1978 a :Date ; :hasYear 1978 .
+ex:date/1981 a :Date ; :hasYear 1981 .
+ex:date/1986 a :Date ; :hasYear 1986 .
+
+ex:drte/1978 a :DateRangeTEI ;
+  :isFrom ex:date/1978 ;
+  :isTo ex:date/1978 .
+
+ex:drte/1978-to-not-after-1986 a :DateRangeTEI ;
+  :isFrom ex:date/1978 ;
+  :isNotAfter ex:date/1986 ;
+  :hasTextualDescription "Sammet served as an AFIPS representative to the CBF board/trustees by 1978 and left before Michael Harrison took the role; exact end date unknown." .
+
+ex:drte/not-before-1981 a :DateRangeTEI ;
+  :isNotBefore ex:date/1981 ;
+  :hasTextualDescription "After the DEC meeting in 1981; exact date unknown." .
+
+ex:dr/text-early-board a :DateRange ;
+  :hasTextualDescription "Early CBF board meeting (late 1970s; exact date unspecified)." .
+
+# Source and citation
+ex:source/oh-1 a :Source ;
+  :hasSourceID "source-001" ;
+  :hasSourceName "Oral history interview transcript (Norberg–Aspray excerpt)" ;
+  :hasBibliographicEntry "Transcript excerpt mentioning AFIPS representatives at CBF and the 1978 trustees meeting at Rockefeller University (pp. 43–58)." .
+
+ex:citation/oh-1 a :SourceCitation ;
+  :fromSource ex:source/oh-1 ;
+  :hasPlaceInSource "pp. 43–58" .
+
+# References used by factoids
+## Office/role reference
+ex:ref/sammet-afips-rep a :ReferenceAsSubject ;
+  :referencesPerson ex:person/jean-sammet ;
+  :hasRole ex:role/afips-representative ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+ex:ref/cbf-board a :ReferenceAsObject ;
+  :referencesPerson ex:org/cbf ;
+  :hasRole ex:role/board-trustees ;
+  :hasNameInSourceAs "CBF Board/Trustees" .
+
+## 1978 trustees meeting references
+ex:ref/sammet-attendee a :ReferenceAsSubject ;
+  :referencesPerson ex:person/jean-sammet ;
+  :hasRole ex:role/attendee ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+ex:ref/rockefeller-venue a :LocationReference ;
+  :referencesLocation ex:location/rockefeller-university ;
+  :hasRole ex:role/venue ;
+  :hasNameInSourceAs "Rockefeller University" .
+
+## Computer museum meeting (bibliography dispute) references
+ex:ref/sammet-critic a :ReferenceAsSubject ;
+  :referencesPerson ex:person/jean-sammet ;
+  :hasRole ex:role/critic ;
+  :hasNameInSourceAs "Sammet" .
+
+ex:ref/norberg-target a :ReferenceAsObject ;
+  :referencesPerson ex:person/norberg ;
+  :hasRole ex:role/target ;
+  :hasNameInSourceAs "Norberg" .
+
+## Early CBF board meeting (archives advocacy) references
+ex:ref/sammet-advocate a :ReferenceAsSubject ;
+  :referencesPerson ex:person/jean-sammet ;
+  :hasRole ex:role/advocate ;
+  :hasNameInSourceAs "Sammet" .
+
+ex:ref/afips-represented a :ReferenceAsObject ;
+  :referencesPerson ex:org/afips ;
+  :hasRole ex:role/represented-institution ;
+  :hasNameInSourceAs "AFIPS" .
+
+ex:ref/cbf-host a :ReferenceAsObject ;
+  :referencesPerson ex:org/cbf ;
+  :hasRole ex:role/host-organization ;
+  :hasNameInSourceAs "CBF" .
+
+# Factoids related to Jean Sammet
+## F1. Office: AFIPS representative to the CBF Board/Trustees (by 1978; end date unknown but before Harrison’s tenure)
+ex:factoid/sammet-office-afips-rep-cbf a :OfficeFactoid ;
+  :sourcedFrom ex:citation/oh-1 ;
+  :dateForAssertion ex:drte/1978-to-not-after-1986 ;
+  :hasReference ex:ref/sammet-afips-rep ,
+                ex:ref/cbf-board .
+
+## F2. Event: 1978 first trustees meeting at Rockefeller University, attended by Sammet
+ex:factoid/1978-trustees-meeting a :EventFactoid ;
+  :hasEventName "First trustees meeting at Rockefeller University" ;
+  :occurredOn ex:drte/1978 ;
+  :sourcedFrom ex:citation/oh-1 ;
+  :hasReference ex:ref/sammet-attendee ,
+                ex:ref/rockefeller-venue .
+
+## F3. Event: Computer museum meeting after the 1981 DEC meeting where Sammet criticized Norberg about the bibliography
+ex:factoid/computer-museum-bibliography a :EventFactoid ;
+  :hasEventName "Computer museum meeting where Sammet criticized Norberg about bibliography" ;
+  :occurredOn ex:drte/not-before-1981 ;
+  :sourcedFrom ex:citation/oh-1 ;
+  :hasReference ex:ref/sammet-critic ,
+                ex:ref/norberg-target .
+
+## F4. Event: Early CBF board meeting where AFIPS representatives (including Sammet) pressed to build an archive
+ex:factoid/early-cbf-board-archives a :EventFactoid ;
+  :hasEventName "Early CBF board meeting where AFIPS representatives, including Sammet, pressed to build an archive" ;
+  :occurredOn ex:dr/text-early-board ;
+  :sourcedFrom ex:citation/oh-1 ;
+  :hasReference ex:ref/sammet-advocate ,
+                ex:ref/afips-represented ,
+                ex:ref/cbf-host .

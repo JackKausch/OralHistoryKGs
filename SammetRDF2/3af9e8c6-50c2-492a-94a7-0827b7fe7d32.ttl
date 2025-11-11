@@ -1,0 +1,53 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+# People
+:Person_Jean_Sammet a :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+# Source and citation for this excerpt
+:Source_Interview_1 a :Source ;
+  :hasSourceID "SRC-1" ;
+  :hasSourceName "Interview transcript excerpt (Yost and Ye)" .
+
+:SourceCitation_1 a :SourceCitation ;
+  :fromSource :Source_Interview_1 ;
+  :hasPlaceInSource "16" .
+
+# Roles used in references
+:Role_SubjectOfPapers a :Role ;
+  :hasRoleName "subject of papers" .
+
+:Role_OccupationLabel a :Role ;
+  :hasRoleName "famed computer scientist" .
+
+# References to Jean Sammet in the source
+:Ref_JS_Subject a :ReferenceAsSubject ;
+  :referencesPerson :Person_Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_SubjectOfPapers .
+
+:Ref_JS_OccRole a :ReferenceAsSubject ;
+  :referencesPerson :Person_Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_OccupationLabel .
+
+# Possession asserted: Papers of Jean Sammet are in the collections
+:Possession_Jean_Sammet_Papers a :NongeographicalPossession ;
+  :hasPossessionName "Papers of Jean Sammet" .
+
+:Factoid_JS_Papers a :PossessionFactoid ;
+  :assertsPossessionOf :Possession_Jean_Sammet_Papers ;
+  :hasReference :Ref_JS_Subject ;
+  :sourcedFrom :SourceCitation_1 .
+
+# Occupation/status asserted: Jean Sammet is characterized as a (famed) computer scientist
+:Factoid_JS_Occupation a :OccupationFactoid ;
+  :hasReference :Ref_JS_OccRole ;
+  :sourcedFrom :SourceCitation_1 .

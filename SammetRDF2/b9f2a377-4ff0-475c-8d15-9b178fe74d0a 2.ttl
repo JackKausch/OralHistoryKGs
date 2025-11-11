@@ -1,0 +1,106 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@prefix ex: <http://example.org/fpo/> .
+
+# Person
+ex:person.jean_sammet a :Person ;
+  :hasDisplayName "Jean E. Sammet" .
+
+# Locations
+ex:location.smithsonian a :Location ;
+  :hasLocationName "Smithsonian Institution" .
+
+ex:location.washington_dc a :Location ;
+  :hasLocationName "Washington, D.C." .
+
+# Roles
+ex:role.participant a :Role ; :hasRoleName "participant" .
+ex:role.venue a :Role ; :hasRoleName "venue" .
+ex:role.city a :Role ; :hasRoleName "city" .
+ex:role.question_suggester a :Role ; :hasRoleName "question suggester" .
+ex:role.respondent a :Role ; :hasRoleName "respondent" .
+
+# Dates
+ex:date.1990-05-17 a :Date ;
+  :hasYear 1990 ;
+  :hasMonth 5 ;
+  :hasDay 17 ;
+  :hasISO8601Date "1990-05-17" .
+
+ex:date.1990-05-18 a :Date ;
+  :hasYear 1990 ;
+  :hasMonth 5 ;
+  :hasDay 18 ;
+  :hasISO8601Date "1990-05-18" .
+
+ex:drtei.conf.from a :DateRangeTEI ;
+  :isFrom ex:date.1990-05-17 .
+
+ex:drtei.conf.to a :DateRangeTEI ;
+  :isTo ex:date.1990-05-18 .
+
+ex:dr.conf a :DateRangeCompound ;
+  :hasFromRange ex:drtei.conf.from ;
+  :hasToRange ex:drtei.conf.to ;
+  :hasTextualDescription "17-18 May 1990" .
+
+# Source and citations
+ex:source.univac_conf_1990 a :Source ;
+  :hasSourceName "UNIVAC Conference" ;
+  :hasSourceID "OH 200" ;
+  :hasBibliographicEntry "UNIVAC Conference, 17-18 May 1990, Smithsonian Institution, Washington, D.C.; organized by the Charles Babbage Institute, the Smithsonian Institution, and Unisys Corporation." .
+
+ex:cite.participants a :SourceCitation ;
+  :fromSource ex:source.univac_conf_1990 ;
+  :hasPlaceInSource "p. 2" .
+
+ex:cite.discussion a :SourceCitation ;
+  :fromSource ex:source.univac_conf_1990 ;
+  :hasPlaceInSource "pp. 83-85" .
+
+# Factoid 1: Jean E. Sammet participated in the UNIVAC Conference (event participation)
+ex:factoid.participation a :EventFactoid ;
+  :hasEventName "UNIVAC Conference (1990)" ;
+  :occurredOn ex:dr.conf ;
+  :sourcedFrom ex:cite.participants ;
+  :hasReference ex:pref.sammet.participant,
+                ex:lref.smithsonian.venue,
+                ex:lref.dc.city .
+
+ex:pref.sammet.participant a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jean_sammet ;
+  :hasNameInSourceAs "Jean E. Sammet" ;
+  :hasRole ex:role.participant .
+
+ex:lref.smithsonian.venue a :LocationReference ;
+  :referencesLocation ex:location.smithsonian ;
+  :hasRole ex:role.venue .
+
+ex:lref.dc.city a :LocationReference ;
+  :referencesLocation ex:location.washington_dc ;
+  :hasRole ex:role.city .
+
+# Factoid 2: During the conference, Jean Sammet suggested and responded in the discussion of “UNIVAC one and a half”
+ex:factoid.discussion_univac_one_and_half a :EventFactoid ;
+  :hasEventName "Discussion of 'UNIVAC one and a half' (UNIVAC II running in UNIVAC I mode; nickname; no separate machine)" ;
+  :occurredOn ex:dr.conf ;
+  :sourcedFrom ex:cite.discussion ;
+  :hasReference ex:pref.sammet.question_suggester,
+                ex:pref.sammet.respondent .
+
+ex:pref.sammet.question_suggester a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jean_sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role.question_suggester .
+
+ex:pref.sammet.respondent a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jean_sammet ;
+  :hasNameInSourceAs "SAMMET" ;
+  :hasRole ex:role.respondent .

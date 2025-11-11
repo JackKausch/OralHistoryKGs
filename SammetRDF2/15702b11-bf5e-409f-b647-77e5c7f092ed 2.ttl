@@ -1,0 +1,192 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+# Persons and Groups
+:JeanSammet rdf:type :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+:TonyRalston rdf:type :MalePerson ;
+  :hasDisplayName "Tony Ralston" .
+
+:EGaller rdf:type :MalePerson ;
+  :hasDisplayName "E. Galler" .
+
+:ACM rdf:type :Institution ;
+  :hasDisplayName "Association for Computing Machinery (ACM)" .
+
+:ACM_SIGs rdf:type :Group ;
+  :hasDisplayName "ACM Special Interest Groups (SIGs)" .
+
+:AnnalsOfTheHistoryOfComputing rdf:type :Institution ;
+  :hasDisplayName "Annals of the History of Computing" .
+
+:AFIPS rdf:type :Institution ;
+  :hasDisplayName "AFIPS" .
+
+:AFIPS_History_Committee rdf:type :Group ;
+  :hasDisplayName "AFIPS History Committee" .
+
+# Roles
+:Role_officeHolder_editorialBoardMember rdf:type :Role ;
+  :hasRoleName "office-holder: editorial board member" .
+
+:Role_officeHolder_vicePresident rdf:type :Role ;
+  :hasRoleName "office-holder: vice-president" .
+
+:Role_officeHolder_president rdf:type :Role ;
+  :hasRoleName "office-holder: president" .
+
+:Role_associatedPresident rdf:type :Role ;
+  :hasRoleName "associated office-holder: president" .
+
+:Role_organization rdf:type :Role ;
+  :hasRoleName "organization" .
+
+:Role_insultedPerson rdf:type :Role ;
+  :hasRoleName "insulted person" .
+
+:Role_insultingParty rdf:type :Role ;
+  :hasRoleName "insulting party" .
+
+:Role_advocate rdf:type :Role ;
+  :hasRoleName "advocate" .
+
+:Role_groupRepresented rdf:type :Role ;
+  :hasRoleName "represented group" .
+
+:Role_proposedInvitee rdf:type :Role ;
+  :hasRoleName "proposed invitee" .
+
+:Role_proposer rdf:type :Role ;
+  :hasRoleName "proposer" .
+
+# Source and citation
+:Source_1991_Interview1 rdf:type :Source ;
+  :hasSourceName "Oral history transcript (10 August 1991, Ann Arbor, MI)" ;
+  :hasBibliographicEntry "Oral history transcript, interview with E. Galler. Date: 10 August 1991. Location: Ann Arbor, MI. Extract includes pp. 52 and 57." .
+
+:SC1 rdf:type :SourceCitation ;
+  :fromSource :Source_1991_Interview1 ;
+  :hasPlaceInSource "pp. 52, 57" .
+
+# Dates
+:Date_1991_08_10 rdf:type :Date ;
+  :hasISO8601Date "1991-08-10" ;
+  :hasYear 1991 ;
+  :hasMonth 8 ;
+  :hasDay 10 .
+
+:DR_TEI_1991_08_10 rdf:type :DateRangeTEI ;
+  :isFrom :Date_1991_08_10 ;
+  :isTo :Date_1991_08_10 .
+
+# Factoid F1: Jean Sammet served on the Annals editorial board
+:Fact_AnnalsEditorialBoard_Sammet rdf:type :OfficeFactoid ;
+  :dateAsserted :DR_TEI_1991_08_10 ;
+  :sourcedFrom :SC1 ;
+  :hasReference :Ref_F1_Sammet , :Ref_F1_Annals .
+
+:Ref_F1_Sammet rdf:type :ReferenceAsSubject ;
+  :referencesPerson :JeanSammet ;
+  :hasRole :Role_officeHolder_editorialBoardMember ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:Ref_F1_Annals rdf:type :PersonReference ;
+  :referencesPerson :AnnalsOfTheHistoryOfComputing ;
+  :hasRole :Role_organization ;
+  :hasNameInSourceAs "the Annals" .
+
+# Factoid F2: AFIPS History Committee treated Jean Sammet insultingly
+:Fact_AFIPS_Insult_Sammet rdf:type :RelationshipFactoid ;
+  :dateAsserted :DR_TEI_1991_08_10 ;
+  :sourcedFrom :SC1 ;
+  :hasReference :Ref_F2_Sammet , :Ref_F2_AFIPS_HistComm .
+
+:Ref_F2_Sammet rdf:type :ReferenceAsSubject ;
+  :referencesPerson :JeanSammet ;
+  :hasRole :Role_insultedPerson ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:Ref_F2_AFIPS_HistComm rdf:type :PersonReference ;
+  :referencesPerson :AFIPS_History_Committee ;
+  :hasRole :Role_insultingParty ;
+  :hasNameInSourceAs "AFIPS History Committee" .
+
+# Factoid F3: Jean Sammet was very active on behalf of the ACM SIGs
+:Fact_ACM_SIGs_Advocacy_Sammet rdf:type :RelationshipFactoid ;
+  :dateAsserted :DR_TEI_1991_08_10 ;
+  :sourcedFrom :SC1 ;
+  :hasReference :Ref_F3_Sammet , :Ref_F3_SIGs .
+
+:Ref_F3_Sammet rdf:type :ReferenceAsSubject ;
+  :referencesPerson :JeanSammet ;
+  :hasRole :Role_advocate ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:Ref_F3_SIGs rdf:type :PersonReference ;
+  :referencesPerson :ACM_SIGs ;
+  :hasRole :Role_groupRepresented ;
+  :hasNameInSourceAs "SIGs" .
+
+# Factoid F4: Jean Sammet served as ACM Vice-President under Tony Ralston
+:Fact_ACM_VicePresident_Sammet rdf:type :OfficeFactoid ;
+  :dateAsserted :DR_TEI_1991_08_10 ;
+  :sourcedFrom :SC1 ;
+  :hasReference :Ref_F4_Sammet , :Ref_F4_ACM , :Ref_F4_TonyRalston .
+
+:Ref_F4_Sammet rdf:type :ReferenceAsSubject ;
+  :referencesPerson :JeanSammet ;
+  :hasRole :Role_officeHolder_vicePresident ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:Ref_F4_ACM rdf:type :PersonReference ;
+  :referencesPerson :ACM ;
+  :hasRole :Role_organization ;
+  :hasNameInSourceAs "ACM" .
+
+:Ref_F4_TonyRalston rdf:type :PersonReference ;
+  :referencesPerson :TonyRalston ;
+  :hasRole :Role_associatedPresident ;
+  :hasNameInSourceAs "Tony Ralston" .
+
+# Factoid F5: Jean Sammet became ACM President
+:Fact_ACM_President_Sammet rdf:type :OfficeFactoid ;
+  :dateAsserted :DR_TEI_1991_08_10 ;
+  :sourcedFrom :SC1 ;
+  :hasReference :Ref_F5_Sammet , :Ref_F5_ACM .
+
+:Ref_F5_Sammet rdf:type :ReferenceAsSubject ;
+  :referencesPerson :JeanSammet ;
+  :hasRole :Role_officeHolder_president ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:Ref_F5_ACM rdf:type :PersonReference ;
+  :referencesPerson :ACM ;
+  :hasRole :Role_organization ;
+  :hasNameInSourceAs "ACM" .
+
+# Factoid F6: Jean Sammet listed as a proposed invitee to a planning meeting
+:Fact_PlanningMeetingInvitee_Sammet rdf:type :EventFactoid ;
+  :hasEventName "Planning meeting proposal invitee list included Jean Sammet" ;
+  :occurredOn :DR_TEI_1991_08_10 ;
+  :dateAsserted :DR_TEI_1991_08_10 ;
+  :sourcedFrom :SC1 ;
+  :hasReference :Ref_F6_Sammet , :Ref_F6_Organizer .
+
+:Ref_F6_Sammet rdf:type :ReferenceAsObject ;
+  :referencesPerson :JeanSammet ;
+  :hasRole :Role_proposedInvitee ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:Ref_F6_Organizer rdf:type :ReferenceAsSubject ;
+  :referencesPerson :EGaller ;
+  :hasRole :Role_proposer ;
+  :hasNameInSourceAs "E. Galler" .

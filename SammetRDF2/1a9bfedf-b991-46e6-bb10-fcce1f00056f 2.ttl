@@ -1,0 +1,98 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+:Jean_Sammet rdf:type :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+:Nat_Rochester rdf:type :MalePerson ;
+  :hasDisplayName "Nat Rochester" .
+
+:Bob_Tabory rdf:type :MalePerson ;
+  :hasDisplayName "Bob Tabory" .
+
+:IBM rdf:type :Institution ;
+  :hasDisplayName "IBM" .
+
+:Source_Interview_ROSS_ONEILL rdf:type :FRBRSource ;
+  :hasSourceName "Interview transcript: ROSS and O'NEILL" ;
+  :hasSourceID "doc-1" .
+
+:Citation_doc1_p29 rdf:type :SourceCitation ;
+  :fromSource :Source_Interview_ROSS_ONEILL ;
+  :hasPlaceInSource "p. 29" .
+
+:Role_employer rdf:type :Role ; :hasRoleName "employer" .
+:Role_employee rdf:type :Role ; :hasRoleName "employee" .
+:Role_supervisor rdf:type :Role ; :hasRoleName "supervisor" .
+:Role_subordinate rdf:type :Role ; :hasRoleName "subordinate" .
+:Role_commissioner rdf:type :Role ; :hasRoleName "commissioner" .
+:Role_author rdf:type :Role ; :hasRoleName "author" .
+
+# Factoid 1: Jean Sammet worked for Nat Rochester.
+:Ref_JS_subj_1 rdf:type :ReferenceAsSubject ;
+  :referencesPerson :Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_employee .
+
+:Ref_NR_obj_1 rdf:type :ReferenceAsObject ;
+  :referencesPerson :Nat_Rochester ;
+  :hasNameInSourceAs "Nat Rochester" ;
+  :hasRole :Role_employer .
+
+:F_Employment_JS_Nat rdf:type :RelationshipFactoid ;
+  :hasReference :Ref_JS_subj_1 , :Ref_NR_obj_1 ;
+  :sourcedFrom :Citation_doc1_p29 .
+
+# Factoid 2: Jean Sammet supervised Bob Tabory (in her group).
+:Ref_JS_subj_2 rdf:type :ReferenceAsSubject ;
+  :referencesPerson :Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_supervisor .
+
+:Ref_BT_obj_2 rdf:type :ReferenceAsObject ;
+  :referencesPerson :Bob_Tabory ;
+  :hasNameInSourceAs "Bob Tabory" ;
+  :hasRole :Role_subordinate .
+
+:F_Supervision_JS_Bob rdf:type :RelationshipFactoid ;
+  :hasReference :Ref_JS_subj_2 , :Ref_BT_obj_2 ;
+  :sourcedFrom :Citation_doc1_p29 .
+
+# Factoid 3: Jean Sammet employed by/working at IBM (context of IBM study and group).
+:Ref_JS_subj_3 rdf:type :ReferenceAsSubject ;
+  :referencesPerson :Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_employee .
+
+:Ref_IBM_obj_3 rdf:type :ReferenceAsObject ;
+  :referencesPerson :IBM ;
+  :hasNameInSourceAs "IBM" ;
+  :hasRole :Role_employer .
+
+:F_Employment_JS_IBM rdf:type :RelationshipFactoid ;
+  :hasReference :Ref_JS_subj_3 , :Ref_IBM_obj_3 ;
+  :sourcedFrom :Citation_doc1_p29 .
+
+# Factoid 4: Jean Sammet had an IBM study done by Bob Tabory (AED vs PL/I study).
+:Ref_JS_subj_4 rdf:type :ReferenceAsSubject ;
+  :referencesPerson :Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_commissioner .
+
+:Ref_BT_obj_4 rdf:type :ReferenceAsObject ;
+  :referencesPerson :Bob_Tabory ;
+  :hasNameInSourceAs "Bob Tabory" ;
+  :hasRole :Role_author .
+
+:F_Commissioned_Study_JS_Bob rdf:type :EventFactoid ;
+  :hasEventName "Commissioned IBM study comparing AED and its effect on PL/I" ;
+  :hasReference :Ref_JS_subj_4 , :Ref_BT_obj_4 ;
+  :sourcedFrom :Citation_doc1_p29 .

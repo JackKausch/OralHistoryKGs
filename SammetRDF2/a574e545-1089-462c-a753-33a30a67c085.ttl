@@ -1,0 +1,44 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+:person_jean_sammet rdf:type :FemalePerson ;
+    :hasDisplayName "Jean Sammet" .
+
+:inst_ibm rdf:type :Institution ;
+    :hasDisplayName "IBM" .
+
+:fact_sammet_ibm_status rdf:type :StatusFactoid ;
+    rdfs:label "Jean Sammet did not reach the very high reaches of IBM (as suggested in the Keet/Frana interview)" ;
+    :hasReference :ref_sammet_subject , :ref_ibm_object ;
+    :sourcedFrom :cit_keefrana_p22 .
+
+:ref_sammet_subject rdf:type :ReferenceAsSubject ;
+    :referencesPerson :person_jean_sammet ;
+    :hasNameInSourceAs "Jean Sammet" ;
+    :hasRole :role_subject .
+
+:ref_ibm_object rdf:type :ReferenceAsObject ;
+    :referencesPerson :inst_ibm ;
+    :hasNameInSourceAs "IBM" ;
+    :hasRole :role_organization .
+
+:role_subject rdf:type :Role ;
+    :hasRoleName "subject" .
+
+:role_organization rdf:type :Role ;
+    :hasRoleName "organization" .
+
+:source_keefrana rdf:type :FRBRSource ;
+    :hasSourceName "Keet/Frana Interview" ;
+    :hasSourceID "keet-frana-interview" ;
+    :hasBibliographicEntry "Keet/Frana Interview, p. 22; discussion of IBM and possible glass ceiling referencing Jean Sammet and Charlotte Scott." .
+
+:cit_keefrana_p22 rdf:type :SourceCitation ;
+    :fromSource :source_keefrana ;
+    :hasPlaceInSource "Page 22" .

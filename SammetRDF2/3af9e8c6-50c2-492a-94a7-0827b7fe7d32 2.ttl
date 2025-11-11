@@ -1,0 +1,84 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@prefix ex: <http://example.org/fpo/> .
+
+# Persons
+ex:jean_sammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+# Repository (unspecified in source, referenced as “we”)
+ex:unspecified_repository a :Institution ;
+  :hasDisplayName "unspecified repository referenced as 'we' in the source" .
+
+# Source and citation
+ex:source1 a :FRBRSource ;
+  :hasSourceID "doc-1" ;
+  :hasSourceName "Interview transcript excerpt (Yost/Ye) on archival collections" ;
+  :hasBibliographicEntry "Interview excerpt discussing archival collections; includes statement: 'The papers of famed computer scientists, like Alan Perlis, Edmund Berkeley, Jean Sammet, and Willis Ware.'" .
+
+ex:cit1 a :SourceCitation ;
+  :fromSource ex:source1 ;
+  :hasPlaceInSource "p. 16" .
+
+# Roles
+ex:role_computer_scientist a :Role ;
+  :hasRoleName "computer scientist" .
+
+ex:role_famed a :Role ;
+  :hasRoleName "famed" .
+
+ex:role_repository a :Role ;
+  :hasRoleName "repository" .
+
+ex:role_subject_of_papers a :Role ;
+  :hasRoleName "subject of papers" .
+
+# References used in factoids
+ex:ref_sammet_occ a :ReferenceAsSubject ;
+  :referencesPerson ex:jean_sammet ;
+  :hasRole ex:role_computer_scientist ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+ex:ref_sammet_status a :ReferenceAsSubject ;
+  :referencesPerson ex:jean_sammet ;
+  :hasRole ex:role_famed ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+ex:ref_repo_subject a :ReferenceAsSubject ;
+  :referencesPerson ex:unspecified_repository ;
+  :hasRole ex:role_repository ;
+  :hasNameInSourceAs "we" .
+
+ex:ref_sammet_papers_obj a :ReferenceAsObject ;
+  :referencesPerson ex:jean_sammet ;
+  :hasRole ex:role_subject_of_papers ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+# Possession (papers)
+ex:papers_of_sammet a :NongeographicalPossession ;
+  :hasPossessionName "papers of Jean Sammet" .
+
+# Factoids
+
+# 1) Occupation: Jean Sammet is a computer scientist (stated explicitly).
+ex:fact_occupation_sammet a :OccupationFactoid ;
+  :hasReference ex:ref_sammet_occ ;
+  :sourcedFrom ex:cit1 .
+
+# 2) Status: Jean Sammet is characterized as “famed”.
+ex:fact_status_sammet a :StatusFactoid ;
+  :hasReference ex:ref_sammet_status ;
+  :sourcedFrom ex:cit1 .
+
+# 3) Possession: The repository (“we”) holds the papers of Jean Sammet.
+ex:fact_possession_sammet_papers a :PossessionFactoid ;
+  :assertsPossessionOf ex:papers_of_sammet ;
+  :hasReference ex:ref_repo_subject , ex:ref_sammet_papers_obj ;
+  :sourcedFrom ex:cit1 .

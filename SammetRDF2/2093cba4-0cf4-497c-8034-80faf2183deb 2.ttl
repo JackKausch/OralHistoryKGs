@@ -1,0 +1,31 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/resource/> .
+
+ex:Jean_Sammet rdf:type :Person ;
+    :hasDisplayName "Jean Sammet" .
+
+ex:Factoid_JS_1 rdf:type :OccupationFactoid ;
+    :hasReference ex:Ref_JS_1 ;
+    :sourcedFrom ex:Cit_Doc1 .
+
+ex:Ref_JS_1 rdf:type :ReferenceAsSubject ;
+    :referencesPerson ex:Jean_Sammet ;
+    :hasNameInSourceAs "Jean Sammet" ;
+    :hasRole ex:Role_JS_1 .
+
+ex:Role_JS_1 rdf:type :Role ;
+    :hasRoleName "documented programming languages; made a career of it" .
+
+ex:Cit_Doc1 rdf:type :SourceCitation ;
+    :fromSource ex:Src_Doc1 ;
+    :hasPlaceInSource "Frana: 'Which Jean Sammet made a career out of it, documenting.'" .
+
+ex:Src_Doc1 rdf:type :Source ;
+    :hasSourceName "Interview transcript excerpt (Frana/Patton)" ;
+    :hasSourceID "user-doc-1" .

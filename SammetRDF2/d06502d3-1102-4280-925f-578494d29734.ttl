@@ -1,0 +1,231 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+#################################################################
+# Persons and groups
+#################################################################
+
+:person_JeanSammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+:person_JANLee a :MalePerson ;
+  :hasDisplayName "J. A. N. Lee" .
+
+:person_PaulECeruzzi a :MalePerson ;
+  :hasDisplayName "Paul E. Ceruzzi" .
+
+:person_WilliamAspray a :MalePerson ;
+  :hasDisplayName "William Aspray" .
+
+:group_YoungerAttendees a :Group ;
+  :hasDisplayName "younger attendees" .
+
+#################################################################
+# Locations
+#################################################################
+
+:loc_Charlottesville_VA a :Location ;
+  :hasLocationName "Charlottesville, Virginia" .
+
+:loc_Washington a :Location ;
+  :hasLocationName "Washington" .
+
+:loc_Blacksburg_VA a :Location ;
+  :hasLocationName "Blacksburg, Virginia" .
+
+#################################################################
+# Roles
+#################################################################
+
+:role_attendee a :Role ; :hasRoleName "attendee" .
+:role_eventLocation a :Role ; :hasRoleName "event location" .
+:role_origin a :Role ; :hasRoleName "origin of travel" .
+:role_destination a :Role ; :hasRoleName "destination of travel" .
+:role_traveler a :Role ; :hasRoleName "traveler" .
+:role_sessionChair a :Role ; :hasRoleName "session chair" .
+:role_timekeeper a :Role ; :hasRoleName "timekeeper" .
+:role_subject a :Role ; :hasRoleName "subject" .
+:role_admirer a :Role ; :hasRoleName "admirer" .
+:role_admired a :Role ; :hasRoleName "admired" .
+:role_contextLocation a :Role ; :hasRoleName "context location" .
+
+#################################################################
+# Source and citations
+#################################################################
+
+:source_DOC1 a :Source ;
+  :hasSourceID "DOC1" ;
+  :hasSourceName "Aspray–Ceruzzi interview transcript (excerpt)" .
+
+:cit_SHOT_Charlottesville a :SourceCitation ;
+  :fromSource :source_DOC1 ;
+  :hasPlaceInSource "SHOT meeting anecdote (Charlottesville, VA)" .
+
+:cit_Travel_Jean_SHOT a :SourceCitation ;
+  :fromSource :source_DOC1 ;
+  :hasPlaceInSource "Note: 'Jean Sammet came down from Washington' (SHOT, Charlottesville)" .
+
+:cit_HOPL_Timekeeping a :SourceCitation ;
+  :fromSource :source_DOC1 ;
+  :hasPlaceInSource "HOPL conference bell/timekeeping description" .
+
+:cit_Status_Dominance a :SourceCitation ;
+  :fromSource :source_DOC1 ;
+  :hasPlaceInSource "Commentary on Jean Sammet's domination of history of programming languages" .
+
+:cit_Status_Opinionated a :SourceCitation ;
+  :fromSource :source_DOC1 ;
+  :hasPlaceInSource "Description of Jean as 'very opinionated' and 'wonderful'" .
+
+:cit_Relationship_Awe a :SourceCitation ;
+  :fromSource :source_DOC1 ;
+  :hasPlaceInSource "Younger people in awe of Jean at SHOT (Charlottesville)" .
+
+#################################################################
+# Date ranges (unknown/unspecified dates where needed)
+#################################################################
+
+:drange_unknown_SHOT a :DateRange ;
+  :hasTextualDescription "Date not specified in source" .
+
+:drange_unknown_HOPL a :DateRange ;
+  :hasTextualDescription "Date not specified in source" .
+
+#################################################################
+# Factoid 1: Jean Sammet attended a SHOT meeting in Charlottesville, VA
+#################################################################
+
+:fact_SHOT_Charlottesville a :EventFactoid ;
+  :hasEventName "SHOT meeting, Charlottesville" ;
+  :occurredOn :drange_unknown_SHOT ;
+  :sourcedFrom :cit_SHOT_Charlottesville ;
+  :hasReference
+    :ref_JS_attendee_SHOT ,
+    :ref_JAN_attendee_SHOT ,
+    :ref_LOC_event_SHOT .
+
+:ref_JS_attendee_SHOT a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_attendee ;
+  :referencesPerson :person_JeanSammet .
+
+:ref_JAN_attendee_SHOT a :ReferenceAsObject ;
+  :hasNameInSourceAs "J. A. N. Lee" ;
+  :hasRole :role_attendee ;
+  :referencesPerson :person_JANLee .
+
+:ref_LOC_event_SHOT a :LocationReference ;
+  :hasNameInSourceAs "Charlottesville, Virginia" ;
+  :hasRole :role_eventLocation ;
+  :referencesLocation :loc_Charlottesville_VA .
+
+#################################################################
+# Factoid 2: Jean Sammet traveled from Washington to Charlottesville for SHOT
+#################################################################
+
+:fact_Travel_JeanSammet_SHOT a :EventFactoid ;
+  :hasEventName "Travel to SHOT meeting, Charlottesville" ;
+  :occurredOn :drange_unknown_SHOT ;
+  :sourcedFrom :cit_Travel_Jean_SHOT ;
+  :hasReference
+    :ref_JS_traveler ,
+    :ref_LOC_origin_Washington ,
+    :ref_LOC_dest_Charlottesville .
+
+:ref_JS_traveler a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_traveler ;
+  :referencesPerson :person_JeanSammet .
+
+:ref_LOC_origin_Washington a :LocationReference ;
+  :hasNameInSourceAs "Washington" ;
+  :hasRole :role_origin ;
+  :referencesLocation :loc_Washington .
+
+:ref_LOC_dest_Charlottesville a :LocationReference ;
+  :hasNameInSourceAs "Charlottesville, Virginia" ;
+  :hasRole :role_destination ;
+  :referencesLocation :loc_Charlottesville_VA .
+
+#################################################################
+# Factoid 3: Jean Sammet served as session chair/timekeeper at HOPL
+#################################################################
+
+:fact_HOPL_Timekeeping a :EventFactoid ;
+  :hasEventName "HOPL (History of Programming Languages) conference sessions" ;
+  :occurredOn :drange_unknown_HOPL ;
+  :sourcedFrom :cit_HOPL_Timekeeping ;
+  :hasReference
+    :ref_JS_sessionChair ,
+    :ref_JS_timekeeper .
+
+:ref_JS_sessionChair a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_sessionChair ;
+  :referencesPerson :person_JeanSammet .
+
+:ref_JS_timekeeper a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_timekeeper ;
+  :referencesPerson :person_JeanSammet .
+
+#################################################################
+# Factoid 4: Status – Jean Sammet had a dominating influence on history of programming languages
+#################################################################
+
+:fact_Status_Dominance a :StatusFactoid ;
+  rdfs:label "Dominating influence on history of programming languages; alternate histories had difficulty being told" ;
+  :sourcedFrom :cit_Status_Dominance ;
+  :hasReference :ref_JS_subject_dominance .
+
+:ref_JS_subject_dominance a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_subject ;
+  :referencesPerson :person_JeanSammet .
+
+#################################################################
+# Factoid 5: Status – Jean Sammet described as very opinionated and wonderful
+#################################################################
+
+:fact_Status_Opinionated a :StatusFactoid ;
+  rdfs:label "Described as very opinionated and a wonderful person" ;
+  :sourcedFrom :cit_Status_Opinionated ;
+  :hasReference :ref_JS_subject_opinionated .
+
+:ref_JS_subject_opinionated a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_subject ;
+  :referencesPerson :person_JeanSammet .
+
+#################################################################
+# Factoid 6: Relationship – Younger attendees were in awe of Jean at SHOT (Charlottesville)
+#################################################################
+
+:fact_Relationship_Awe a :RelationshipFactoid ;
+  rdfs:label "Younger attendees were in total awe of Jean Sammet at the SHOT meeting" ;
+  :sourcedFrom :cit_Relationship_Awe ;
+  :hasReference
+    :ref_Young_admirers ,
+    :ref_JS_admired ,
+    :ref_LOC_context_Charlottesville .
+
+:ref_Young_admirers a :ReferenceAsSubject ;
+  :hasNameInSourceAs "younger people" ;
+  :hasRole :role_admirer ;
+  :referencesPerson :group_YoungerAttendees .
+
+:ref_JS_admired a :ReferenceAsObject ;
+  :hasNameInSourceAs "Jean" ;
+  :hasRole :role_admired ;
+  :referencesPerson :person_JeanSammet .
+
+:ref_LOC_context_Charlottesville a :LocationReference ;
+  :hasNameInSourceAs "Charlottesville, Virginia" ;
+  :hasRole :role_contextLocation ;
+  :referencesLocation :loc_Charlottesville_VA .

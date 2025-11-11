@@ -1,0 +1,117 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+
+# Persons and Institution
+<https://data.example.org/fpo/person/jean-sammet> a :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+<https://data.example.org/fpo/person/nat-rochester> a :Person ;
+  :hasDisplayName "Nat Rochester" .
+
+<https://data.example.org/fpo/person/bob-tabory> a :Person ;
+  :hasDisplayName "Bob Tabory" .
+
+<https://data.example.org/fpo/institution/ibm> a :Institution ;
+  :hasDisplayName "IBM" .
+
+# Sources and citations
+<https://data.example.org/fpo/source/oralhistory-ross-oneill> a :Source ;
+  :hasSourceName "Oral history interview excerpt (ROSS–O'NEILL) discussing PL/I and AED" ;
+  :hasBibliographicEntry "Interview transcript excerpt; exact pagination not supplied in the provided text." .
+
+<https://data.example.org/fpo/citation/oralhistory-f1> a :SourceCitation ;
+  :fromSource <https://data.example.org/fpo/source/oralhistory-ross-oneill> ;
+  :hasPlaceInSource "Excerpt (no page given)" .
+
+<https://data.example.org/fpo/citation/oralhistory-f2> a :SourceCitation ;
+  :fromSource <https://data.example.org/fpo/source/oralhistory-ross-oneill> ;
+  :hasPlaceInSource "Excerpt (no page given)" .
+
+<https://data.example.org/fpo/citation/oralhistory-f3> a :SourceCitation ;
+  :fromSource <https://data.example.org/fpo/source/oralhistory-ross-oneill> ;
+  :hasPlaceInSource "Excerpt (no page given)" .
+
+<https://data.example.org/fpo/source/ibm-report-aed-pli> a :FRBRSource ;
+  :hasSourceName "IBM report on AED and its effect on PL/I (study performed by Bob Tabory in Jean Sammet’s group)" .
+
+<https://data.example.org/fpo/citation/ibm-report> a :SourceCitation ;
+  :fromSource <https://data.example.org/fpo/source/ibm-report-aed-pli> ;
+  :hasPlaceInSource "Not specified in the provided text" .
+
+# Roles used in references
+<https://data.example.org/fpo/role/employee> a :Role ; :hasRoleName "employee" .
+<https://data.example.org/fpo/role/supervisor> a :Role ; :hasRoleName "supervisor" .
+<https://data.example.org/fpo/role/commissioner> a :Role ; :hasRoleName "commissioner" .
+<https://data.example.org/fpo/role/analyst> a :Role ; :hasRoleName "analyst" .
+<https://data.example.org/fpo/role/institution> a :Role ; :hasRoleName "institution" .
+
+# Generic undated ranges used for these assertions
+<https://data.example.org/fpo/daterange/undated-1> a :DateRange ;
+  :hasTextualDescription "Undated in transcript excerpt" .
+
+<https://data.example.org/fpo/daterange/undated-2> a :DateRange ;
+  :hasTextualDescription "Undated in transcript excerpt" .
+
+<https://data.example.org/fpo/daterange/undated-3> a :DateRange ;
+  :hasTextualDescription "Undated in transcript excerpt" .
+
+# FACTOID 1: Jean Sammet worked for Nat Rochester.
+<https://data.example.org/fpo/factoid/jean-worked-for-nat> a :RelationshipFactoid ;
+  :dateForAssertion <https://data.example.org/fpo/daterange/undated-1> ;
+  :hasReference <https://data.example.org/fpo/ref/jean-employee>, <https://data.example.org/fpo/ref/nat-supervisor> ;
+  :sourcedFrom <https://data.example.org/fpo/citation/oralhistory-f1> .
+
+<https://data.example.org/fpo/ref/jean-employee> a :ReferenceAsSubject , :PersonReference ;
+  :referencesPerson <https://data.example.org/fpo/person/jean-sammet> ;
+  :hasNameInSourceAs "Jean" ;
+  :hasRole <https://data.example.org/fpo/role/employee> .
+
+<https://data.example.org/fpo/ref/nat-supervisor> a :ReferenceAsObject , :PersonReference ;
+  :referencesPerson <https://data.example.org/fpo/person/nat-rochester> ;
+  :hasNameInSourceAs "Nat" ;
+  :hasRole <https://data.example.org/fpo/role/supervisor> .
+
+# FACTOID 2: Jean Sammet supervised Bob Tabory (within her group).
+<https://data.example.org/fpo/factoid/jean-supervised-bob> a :RelationshipFactoid ;
+  :dateForAssertion <https://data.example.org/fpo/daterange/undated-2> ;
+  :hasReference <https://data.example.org/fpo/ref/jean-supervisor>, <https://data.example.org/fpo/ref/bob-analyst> ;
+  :sourcedFrom <https://data.example.org/fpo/citation/oralhistory-f2> .
+
+<https://data.example.org/fpo/ref/jean-supervisor> a :ReferenceAsSubject , :PersonReference ;
+  :referencesPerson <https://data.example.org/fpo/person/jean-sammet> ;
+  :hasNameInSourceAs "Jean" ;
+  :hasRole <https://data.example.org/fpo/role/supervisor> .
+
+<https://data.example.org/fpo/ref/bob-analyst> a :ReferenceAsObject , :PersonReference ;
+  :referencesPerson <https://data.example.org/fpo/person/bob-tabory> ;
+  :hasNameInSourceAs "Bob Tabory" ;
+  :hasRole <https://data.example.org/fpo/role/analyst> .
+
+# FACTOID 3: An IBM study on AED and its effect on PL/I was carried out by Bob Tabory in Jean Sammet’s group (commissioned by Jean).
+<https://data.example.org/fpo/factoid/ibm-study-aed-pli> a :EventFactoid ;
+  :occurredOn <https://data.example.org/fpo/daterange/undated-3> ;
+  :hasEventName "IBM study: AED and its effect on PL/I" ;
+  :hasReference <https://data.example.org/fpo/ref/jean-commissioner>, <https://data.example.org/fpo/ref/bob-study-analyst>, <https://data.example.org/fpo/ref/ibm-institution> ;
+  :sourcedFrom <https://data.example.org/fpo/citation/oralhistory-f3> , <https://data.example.org/fpo/citation/ibm-report> .
+
+<https://data.example.org/fpo/ref/jean-commissioner> a :PersonReference ;
+  :referencesPerson <https://data.example.org/fpo/person/jean-sammet> ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole <https://data.example.org/fpo/role/commissioner> .
+
+<https://data.example.org/fpo/ref/bob-study-analyst> a :PersonReference ;
+  :referencesPerson <https://data.example.org/fpo/person/bob-tabory> ;
+  :hasNameInSourceAs "Bob Tabory" ;
+  :hasRole <https://data.example.org/fpo/role/analyst> .
+
+<https://data.example.org/fpo/ref/ibm-institution> a :PersonReference ;
+  :referencesPerson <https://data.example.org/fpo/institution/ibm> ;
+  :hasNameInSourceAs "IBM" ;
+  :hasRole <https://data.example.org/fpo/role/institution> .

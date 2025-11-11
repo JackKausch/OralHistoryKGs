@@ -1,0 +1,143 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/fpo/> .
+
+# Persons and groups
+ex:person.jean-sammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+ex:person.jan-lee a :MalePerson ;
+  :hasDisplayName "J. A. N. Lee" .
+
+ex:group.younger-attendees a :Group ;
+  :hasDisplayName "Younger attendees at Charlottesville SHOT meeting" .
+
+# Locations
+ex:loc.charlottesville a :Location ;
+  :hasLocationName "Charlottesville, Virginia" .
+
+ex:loc.washington a :Location ;
+  :hasLocationName "Washington" .
+
+# Roles
+ex:role.attendee a :Role ; :hasRoleName "attendee" .
+ex:role.eventLocation a :Role ; :hasRoleName "event location" .
+ex:role.travelOrigin a :Role ; :hasRoleName "travel origin" .
+ex:role.possessor a :Role ; :hasRoleName "possessor" .
+ex:role.timekeeper a :Role ; :hasRoleName "timekeeper" .
+ex:role.admiredPerson a :Role ; :hasRoleName "admired person" .
+ex:role.admirers a :Role ; :hasRoleName "admirers" .
+ex:role.dominant-figure a :Role ; :hasRoleName "dominant figure in history of programming languages" .
+
+# Sources and citations
+ex:source.interview a :Source ;
+  :hasSourceName "Interview transcript (Aspray interviewing Ceruzzi)" .
+
+ex:cit.p43 a :SourceCitation ;
+  :fromSource ex:source.interview ;
+  :hasPlaceInSource "p. 43" .
+
+ex:cit.p46 a :SourceCitation ;
+  :fromSource ex:source.interview ;
+  :hasPlaceInSource "p. 46" .
+
+# Date ranges
+ex:dr.SHOT a :DateRange ;
+  :hasTextualDescription "At a SHOT meeting in Charlottesville, Virginia (date not specified in source)." .
+
+ex:dr.HOPL a :DateRange ;
+  :hasTextualDescription "During a HOPL (History of Programming Languages) conference (date not specified in source)." .
+
+ex:dr.PLangEra a :DateRange ;
+  :hasTextualDescription "Era before the third HOPL edition, when Jean Sammet’s narrative dominated (date not specified in source)." .
+
+# Possession (the bell)
+ex:pos.bell a :NongeographicalPossession ;
+  :hasPossessionName "Bell" .
+
+# Factoid 1: Jean Sammet attended a SHOT meeting in Charlottesville, arriving from Washington
+ex:fact.SHOT-attendance a :EventFactoid ;
+  :hasEventName "SHOT meeting in Charlottesville" ;
+  :occurredOn ex:dr.SHOT ;
+  :hasReference ex:ref.jean-shot-attendee ,
+                ex:ref.jan-lee-shot-attendee ,
+                ex:ref.charlottesville-event-location ,
+                ex:ref.washington-origin ;
+  :sourcedFrom ex:cit.p43 .
+
+ex:ref.jean-shot-attendee a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jean-sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role.attendee .
+
+ex:ref.jan-lee-shot-attendee a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jan-lee ;
+  :hasNameInSourceAs "JAN Lee" ;
+  :hasRole ex:role.attendee .
+
+ex:ref.charlottesville-event-location a :LocationReference ;
+  :referencesLocation ex:loc.charlottesville ;
+  :hasNameInSourceAs "Charlottesville, Virginia" ;
+  :hasRole ex:role.eventLocation .
+
+ex:ref.washington-origin a :LocationReference ;
+  :referencesLocation ex:loc.washington ;
+  :hasNameInSourceAs "Washington" ;
+  :hasRole ex:role.travelOrigin .
+
+# Factoid 2: Younger attendees were in awe of (admired) Jean Sammet at the SHOT meeting
+ex:fact.SHOT-admiration a :RelationshipFactoid ;
+  :dateForAssertion ex:dr.SHOT ;
+  :hasReference ex:ref.younger-admirers ,
+                ex:ref.jean-admired ;
+  :sourcedFrom ex:cit.p43 .
+
+ex:ref.younger-admirers a :ReferenceAsSubject ;
+  :referencesPerson ex:group.younger-attendees ;
+  :hasNameInSourceAs "younger people" ;
+  :hasRole ex:role.admirers .
+
+ex:ref.jean-admired a :ReferenceAsObject ;
+  :referencesPerson ex:person.jean-sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role.admiredPerson .
+
+# Factoid 3: At HOPL, Jean Sammet acted as strict timekeeper (rang a bell)
+ex:fact.HOPL-timekeeping a :EventFactoid ;
+  :hasEventName "HOPL conference session timekeeping" ;
+  :occurredOn ex:dr.HOPL ;
+  :hasReference ex:ref.jean-timekeeper ;
+  :sourcedFrom ex:cit.p46 .
+
+ex:ref.jean-timekeeper a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jean-sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role.timekeeper .
+
+# Factoid 4: Jean Sammet possessed a bell used for timekeeping at HOPL
+ex:fact.HOPL-bell-possession a :PossessionFactoid ;
+  :assertsPossessionOf ex:pos.bell ;
+  :dateForAssertion ex:dr.HOPL ;
+  :hasReference ex:ref.jean-possessor ;
+  :sourcedFrom ex:cit.p46 .
+
+ex:ref.jean-possessor a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jean-sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role.possessor .
+
+# Factoid 5: Jean Sammet was a dominant figure in the history of programming languages (making alternate histories harder to tell)
+ex:fact.PLang-dominance a :StatusFactoid ;
+  :dateForAssertion ex:dr.PLangEra ;
+  :hasReference ex:ref.jean-dominant ;
+  :sourcedFrom ex:cit.p46 .
+
+ex:ref.jean-dominant a :ReferenceAsSubject ;
+  :referencesPerson ex:person.jean-sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role.dominant-figure .

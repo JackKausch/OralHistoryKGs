@@ -1,0 +1,178 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Persons and Groups/Institutions
+:person_JeanSammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+:inst_AnnalsHistoryComputing a :Institution ;
+  :hasDisplayName "Annals of the History of Computing" .
+
+:inst_AFIPS_HistoryCommittee a :Institution ;
+  :hasDisplayName "AFIPS History of Computing Committee" .
+
+:inst_CBI a :Institution ;
+  :hasDisplayName "Charles Babbage Institute" .
+
+:inst_ACM a :Institution ;
+  :hasDisplayName "Association for Computing Machinery (ACM)" .
+
+:group_ACM_SIGs a :Institution ;
+  :hasDisplayName "ACM Special Interest Groups (SIGs)" .
+
+# Roles used in references
+:role_editorial_board_member a :Role ; :hasRoleName "editorial board member" .
+:role_organization a :Role ; :hasRoleName "organization" .
+:role_meeting_context a :Role ; :hasRoleName "meeting context" .
+:role_target_of_insult a :Role ; :hasRoleName "target of insulting treatment" .
+:role_advocate a :Role ; :hasRoleName "advocate on behalf of SIGs" .
+:role_constituency a :Role ; :hasRoleName "constituency" .
+:role_acm_vice_president a :Role ; :hasRoleName "vice-president" .
+:role_acm_president a :Role ; :hasRoleName "president" .
+:role_proposed_invitee a :Role ; :hasRoleName "proposed invitee" .
+
+# Source (this document) and citations
+:src_GallerInterview1991 a :FRBRSource ;
+  :hasSourceID "Galler-Interview-1991-08-10" ;
+  :hasSourceName "Oral history interview (E. Galler), 10 Aug 1991, Ann Arbor, MI" ;
+  :hasBibliographicEntry "Oral history transcript; interviewer/context as in provided text; DATE: 10 August 1991; LOCATION: Ann Arbor, MI." .
+
+:cit_AnnalsBoard a :SourceCitation ;
+  :fromSource :src_GallerInterview1991 ;
+  :hasPlaceInSource "around pp. 50–52 (paragraph on Annals editorial board)" .
+
+:cit_AFIPS_Insult a :SourceCitation ;
+  :fromSource :src_GallerInterview1991 ;
+  :hasPlaceInSource "p. 52 (AFIPS History Committee/CBI conflict; insulting treatment of Jean Sammet)" .
+
+:cit_ACM_SIGs a :SourceCitation ;
+  :fromSource :src_GallerInterview1991 ;
+  :hasPlaceInSource "p. 57 (ACM SIGs; Sammet active on their behalf)" .
+
+:cit_ACM_Offices a :SourceCitation ;
+  :fromSource :src_GallerInterview1991 ;
+  :hasPlaceInSource "p. 57 (ACM vice-presidency and presidency sequence)" .
+
+:cit_IPPlanningInvitees a :SourceCitation ;
+  :fromSource :src_GallerInterview1991 ;
+  :hasPlaceInSource "section after DATE line (planning meeting invitee list)" .
+
+# Dates (interview date used as date asserted)
+:date_1991_08_10 a :Date ;
+  :hasISO8601Date "1991-08-10" ;
+  :hasYear 1991 ;
+  :hasMonth 8 ;
+  :hasDay 10 .
+
+:dr_interviewDate a :DateRangeTEI ;
+  :isFrom :date_1991_08_10 ;
+  :isTo :date_1991_08_10 ;
+  :hasTextualDescription "10 August 1991 (interview date; date asserted for all factoids from this source)" .
+
+:dr_undated_in_source a :DateRange ;
+  :hasTextualDescription "Undated in source (timeframe implied but not specified)" .
+
+# References used in factoids
+# Annals editorial board membership
+:ref_JS_AnnalsBoard a :ReferenceAsSubject ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_editorial_board_member ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:ref_Annals_org a :ReferenceAsObject ;
+  :referencesPerson :inst_AnnalsHistoryComputing ;
+  :hasRole :role_organization ;
+  :hasNameInSourceAs "Annals" .
+
+# AFIPS meeting insult context
+:ref_AFIPS_meeting a :ReferenceAsSubject ;
+  :referencesPerson :inst_AFIPS_HistoryCommittee ;
+  :hasRole :role_meeting_context ;
+  :hasNameInSourceAs "AFIPS History of Computing Committee" .
+
+:ref_JS_targetInsult a :ReferenceAsObject ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_target_of_insult ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+# ACM SIGs advocacy
+:ref_JS_SIG_advocate a :ReferenceAsSubject ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_advocate ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:ref_ACM_SIGs a :ReferenceAsObject ;
+  :referencesPerson :group_ACM_SIGs ;
+  :hasRole :role_constituency ;
+  :hasNameInSourceAs "SIGs" .
+
+# ACM offices
+:ref_JS_ACM_VP a :ReferenceAsSubject ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_acm_vice_president ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:ref_JS_ACM_President a :ReferenceAsSubject ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_acm_president ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+:ref_ACM_org a :ReferenceAsObject ;
+  :referencesPerson :inst_ACM ;
+  :hasRole :role_organization ;
+  :hasNameInSourceAs "ACM" .
+
+# IP planning meeting invitee
+:ref_JS_IPInvitee a :ReferenceAsObject ;
+  :referencesPerson :person_JeanSammet ;
+  :hasRole :role_proposed_invitee ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+# Factoids about Jean Sammet extracted from the document
+
+# 1) Jean Sammet served on the Annals of the History of Computing editorial board (and was very involved/helpful).
+:fact_Jean_AnnalsEditorialBoard a :OfficeFactoid ;
+  :dateAsserted :dr_interviewDate ;
+  :dateForAssertion :dr_undated_in_source ;
+  :sourcedFrom :cit_AnnalsBoard ;
+  :hasReference :ref_JS_AnnalsBoard , :ref_Annals_org .
+
+# 2) Jean Sammet was the target of insulting treatment at an AFIPS History Committee meeting during the CBI establishment dispute.
+:fact_Jean_AFIPS_Insult a :EventFactoid ;
+  :occurredOn :dr_undated_in_source ;
+  :dateAsserted :dr_interviewDate ;
+  :sourcedFrom :cit_AFIPS_Insult ;
+  :hasReference :ref_AFIPS_meeting , :ref_JS_targetInsult .
+
+# 3) Jean Sammet was very active on behalf of ACM Special Interest Groups (SIGs).
+:fact_Jean_ACM_SIGs_Advocacy a :RelationshipFactoid ;
+  :dateForAssertion :dr_undated_in_source ;
+  :dateAsserted :dr_interviewDate ;
+  :sourcedFrom :cit_ACM_SIGs ;
+  :hasReference :ref_JS_SIG_advocate , :ref_ACM_SIGs , :ref_ACM_org .
+
+# 4) Jean Sammet served as ACM Vice-President.
+:fact_Jean_ACM_VicePresident a :OfficeFactoid ;
+  :dateForAssertion :dr_undated_in_source ;
+  :dateAsserted :dr_interviewDate ;
+  :sourcedFrom :cit_ACM_Offices ;
+  :hasReference :ref_JS_ACM_VP , :ref_ACM_org .
+
+# 5) Jean Sammet served as ACM President.
+:fact_Jean_ACM_President a :OfficeFactoid ;
+  :dateForAssertion :dr_undated_in_source ;
+  :dateAsserted :dr_interviewDate ;
+  :sourcedFrom :cit_ACM_Offices ;
+  :hasReference :ref_JS_ACM_President , :ref_ACM_org .
+
+# 6) Jean Sammet was listed as a proposed invitee to a planning meeting on computer IP (copyright/patents) circa 1991.
+:fact_Jean_ProposedInvitee_IPMeeting a :EventFactoid ;
+  :hasEventName "Proposed planning meeting on computer IP (copyright/patents)" ;
+  :occurredOn :dr_undated_in_source ;
+  :dateAsserted :dr_interviewDate ;
+  :sourcedFrom :cit_IPPlanningInvitees ;
+  :hasReference :ref_JS_IPInvitee .

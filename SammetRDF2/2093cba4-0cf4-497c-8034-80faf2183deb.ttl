@@ -1,0 +1,28 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Person_Jean_Sammet a :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+:Role_Documentarian a :Role ;
+  :hasRoleName "documentarian of programming languages" .
+
+:Ref_JS_Subj a :ReferenceAsSubject ;
+  :referencesPerson :Person_Jean_Sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :Role_Documentarian .
+
+:Source_FranaPatton_Excerpt a :Source ;
+  :hasSourceName "Frana–Patton interview transcript excerpt" .
+
+:Cit_Frana_Line a :SourceCitation ;
+  :fromSource :Source_FranaPatton_Excerpt ;
+  :hasPlaceInSource "Frana: Which Jean Sammet made a career out of it, documenting." .
+
+:Cit_Patton_Line a :SourceCitation ;
+  :fromSource :Source_FranaPatton_Excerpt ;
+  :hasPlaceInSource "Patton: Yes. Yes, documenting all those languages." .
+
+:Factoid_JS_Occupation_Documenting a :OccupationFactoid ;
+  :hasReference :Ref_JS_Subj ;
+  :sourcedFrom :Cit_Frana_Line , :Cit_Patton_Line .

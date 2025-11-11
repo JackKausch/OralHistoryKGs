@@ -1,0 +1,95 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Persons/Groups (Institutions)
+:person.jeanSammet a :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+:person.natRochester a :Person ;
+  :hasDisplayName "Nat Rochester" .
+
+:institution.ibm a :Institution ;
+  :hasDisplayName "IBM" .
+
+:institution.appliedScienceLabIBM a :Institution ;
+  :hasDisplayName "IBM Applied Science Laboratory" .
+
+:institution.mitTimesharingGroup a :Institution ;
+  :hasDisplayName "MIT timesharing group" .
+
+# Roles used in references
+:role.memberOf a :Role ;
+  :hasRoleName "member of / affiliated with" .
+
+:role.affiliationTarget a :Role ;
+  :hasRoleName "affiliation target (institution)" .
+
+:role.supporter a :Role ;
+  :hasRoleName "supporter" .
+
+:role.supportedGroup a :Role ;
+  :hasRoleName "supported group" .
+
+:role.notAttentive a :Role ;
+  :hasRoleName "not closely paying attention to" .
+
+:role.attentionTarget a :Role ;
+  :hasRoleName "attention target" .
+
+# Source and citation
+:source.thisDoc a :Source ;
+  :hasSourceName "Interview transcript (Corbató–Norberg) – excerpt mentioning Applied Science Lab" ;
+  :hasSourceID "source-001" .
+
+:citation.thisDoc a :SourceCitation ;
+  :fromSource :source.thisDoc ;
+  :hasPlaceInSource "p. 24; section discussing Applied Science Lab and IBM liaison" .
+
+# Factoid 1: Jean Sammet was in/associated with IBM Applied Science Laboratory
+:factoid.sammet.affiliatedASL a :RelationshipFactoid ;
+  :hasReference :ref.sammet.subject.affil, :ref.asl.object.affil ;
+  :sourcedFrom :citation.thisDoc .
+
+:ref.sammet.subject.affil a :ReferenceAsSubject ;
+  :referencesPerson :person.jeanSammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role.memberOf .
+
+:ref.asl.object.affil a :ReferenceAsObject ;
+  :referencesPerson :institution.appliedScienceLabIBM ;
+  :hasNameInSourceAs "Applied Science Lab" ;
+  :hasRole :role.affiliationTarget .
+
+# Factoid 2: Jean Sammet (among others) was supportive of the MIT group
+:factoid.sammet.supportiveOfMIT a :RelationshipFactoid ;
+  :hasReference :ref.sammet.subject.support, :ref.mit.object.support ;
+  :sourcedFrom :citation.thisDoc .
+
+:ref.sammet.subject.support a :ReferenceAsSubject ;
+  :referencesPerson :person.jeanSammet ;
+  :hasNameInSourceAs "They (incl. Jean Sammet)" ;
+  :hasRole :role.supporter .
+
+:ref.mit.object.support a :ReferenceAsObject ;
+  :referencesPerson :institution.mitTimesharingGroup ;
+  :hasNameInSourceAs "us (MIT group)" ;
+  :hasRole :role.supportedGroup .
+
+# Factoid 3: Jean Sammet was not paying close attention to the MIT group’s work
+:factoid.sammet.notPayingAttention a :RelationshipFactoid ;
+  :hasReference :ref.sammet.subject.attn, :ref.mit.object.attn ;
+  :sourcedFrom :citation.thisDoc .
+
+:ref.sammet.subject.attn a :ReferenceAsSubject ;
+  :referencesPerson :person.jeanSammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role.notAttentive .
+
+:ref.mit.object.attn a :ReferenceAsObject ;
+  :referencesPerson :institution.mitTimesharingGroup ;
+  :hasNameInSourceAs "us (MIT group)" ;
+  :hasRole :role.attentionTarget .

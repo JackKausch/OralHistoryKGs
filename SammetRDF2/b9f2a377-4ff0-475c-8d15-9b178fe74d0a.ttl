@@ -1,0 +1,105 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@prefix ex: <http://example.org/univac1990/> .
+
+# Source (the transcript)
+ex:src_OH200 a :FRBRSource ;
+  :hasSourceName "UNIVAC Conference oral history transcript" ;
+  :hasSourceID "OH 200" ;
+  :hasBibliographicEntry "UNIVAC Conference, 17-18 May 1990, Smithsonian Institution, Washington, D.C. Organized by the Charles Babbage Institute, the Smithsonian Institution, and Unisys Corporation. Charles Babbage Institute, University of Minnesota, Minneapolis. Copyright Charles Babbage Institute." .
+
+# Dates and ranges for the conference
+ex:date_1990_05_17 a :Date ;
+  :hasISO8601Date "1990-05-17" ;
+  :hasYear 1990 ;
+  :hasMonth 5 ;
+  :hasDay 17 .
+
+ex:date_1990_05_18 a :Date ;
+  :hasISO8601Date "1990-05-18" ;
+  :hasYear 1990 ;
+  :hasMonth 5 ;
+  :hasDay 18 .
+
+ex:drtei_from a :DateRangeTEI ;
+  :isFrom ex:date_1990_05_17 .
+
+ex:drtei_to a :DateRangeTEI ;
+  :isTo ex:date_1990_05_18 .
+
+ex:dr_conf a :DateRangeCompound ;
+  :hasFromRange ex:drtei_from ;
+  :hasToRange ex:drtei_to ;
+  :hasTextualDescription "17-18 May 1990" .
+
+# Location
+ex:loc_smithsonian_dc a :Location ;
+  :hasLocationName "Smithsonian Institution, Washington, D.C." .
+
+# Person: Jean E. Sammet
+ex:person_jean_sammet a :FemalePerson ;
+  :hasDisplayName "Jean E. Sammet" .
+
+# Roles
+ex:role_participant a :Role ; :hasRoleName "participant" .
+ex:role_venue a :Role ; :hasRoleName "venue" .
+ex:role_speaker a :Role ; :hasRoleName "speaker/respondent" .
+ex:role_question_suggester a :Role ; :hasRoleName "question-suggester" .
+
+# Location references (venue)
+ex:ref_loc_venue a :LocationReference ;
+  :referencesLocation ex:loc_smithsonian_dc ;
+  :hasRole ex:role_venue ;
+  :hasNameInSourceAs "Smithsonian Institution, Washington, D.C." .
+
+ex:ref_loc_venue2 a :LocationReference ;
+  :referencesLocation ex:loc_smithsonian_dc ;
+  :hasRole ex:role_venue ;
+  :hasNameInSourceAs "Smithsonian Institution, Washington, D.C." .
+
+# Citations
+ex:cite_participants a :SourceCitation ;
+  :fromSource ex:src_OH200 ;
+  :hasPlaceInSource "p. 2 (Participants list)" .
+
+ex:cite_qna a :SourceCitation ;
+  :fromSource ex:src_OH200 ;
+  :hasPlaceInSource "pp. 83-85 (Session 2 discussion on 'UNIVAC 1-1/2')" .
+
+# Factoid 1: Jean E. Sammet participated in the UNIVAC Conference (17–18 May 1990)
+ex:ev_univac_conf a :EventFactoid ;
+  :hasEventName "UNIVAC Conference" ;
+  :occurredOn ex:dr_conf ;
+  :hasDateAssertionMade ex:dr_conf ;
+  :sourcedFrom ex:cite_participants ;
+  :hasReference ex:ref_jes_participant , ex:ref_loc_venue .
+
+ex:ref_jes_participant a :ReferenceAsSubject ;
+  :referencesPerson ex:person_jean_sammet ;
+  :hasRole ex:role_participant ;
+  :hasNameInSourceAs "Jean E. Sammet" .
+
+# Factoid 2: In Session 2, Sammet suggested the question and spoke in the 'UNIVAC 1-1/2' discussion
+ex:ev_univac_one_and_half_discussion a :EventFactoid ;
+  :hasEventName "Discussion of 'UNIVAC 1-1/2' in Session 2 — UNIVAC Technical Issues" ;
+  :occurredOn ex:dr_conf ;
+  :hasDateAssertionMade ex:dr_conf ;
+  :sourcedFrom ex:cite_qna ;
+  :hasReference ex:ref_jes_suggest , ex:ref_jes_speaker , ex:ref_loc_venue2 .
+
+ex:ref_jes_suggest a :ReferenceAsSubject ;
+  :referencesPerson ex:person_jean_sammet ;
+  :hasRole ex:role_question_suggester ;
+  :hasNameInSourceAs "Jean Sammet" .
+
+ex:ref_jes_speaker a :ReferenceAsSubject ;
+  :referencesPerson ex:person_jean_sammet ;
+  :hasRole ex:role_speaker ;
+  :hasNameInSourceAs "SAMMET" .

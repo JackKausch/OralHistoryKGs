@@ -1,0 +1,74 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/prosopography/> .
+
+# Persons
+ex:person-jean-sammet a :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+ex:person-jim-rogers a :Person ;
+  :hasDisplayName "Jim Rogers" .
+
+ex:person-robina-mapstone a :Person ;
+  :hasDisplayName "Robina Mapstone" .
+
+# Roles
+ex:role-observer a :Role ;
+  :hasRoleName "Observer" .
+
+ex:role-interviewee a :Role ;
+  :hasRoleName "Interviewee" .
+
+ex:role-interviewer a :Role ;
+  :hasRoleName "Interviewer" .
+
+# Source and citation
+ex:source-cohc-rogers-1973 a :FRBRSource ;
+  :hasSourceName "Computer Oral History Collection, Archives Center, National Museum of American History" ;
+  :hasSourceID "http://invention.smithsonian.org/downloads/fa_cohc_tr_roch730724.pdf" ;
+  :hasBibliographicEntry "Computer Oral History Collection, Archives Center, National Museum of American History, Smithsonian Institution. Interviewee: Jim Rogers. Interviewer: Robina Mapstone. Date: November 11, 1973. Transcript: http://invention.smithsonian.org/downloads/fa_cohc_tr_roch730724.pdf." .
+
+ex:citation-cohc-rogers-1973 a :SourceCitation ;
+  :fromSource ex:source-cohc-rogers-1973 ;
+  :hasPlaceInSource "Transcript" .
+
+# Date of interview
+ex:date-1973-11-11 a :Date ;
+  :hasISO8601Date "1973-11-11" ;
+  :hasYear 1973 ;
+  :hasMonth 11 ;
+  :hasDay 11 .
+
+ex:dr-1973-11-11 a :DateRangeTEI ;
+  :isFrom ex:date-1973-11-11 ;
+  :isTo ex:date-1973-11-11 ;
+  :hasTextualDescription "November 11, 1973" .
+
+# Person references within the factoid
+ex:ref-jean-sammet-rogers-interview a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammett" ;
+  :referencesPerson ex:person-jean-sammet ;
+  :hasRole ex:role-observer .
+
+ex:ref-jim-rogers-rogers-interview a :ReferenceAsObject ;
+  :hasNameInSourceAs "Jim Rogers" ;
+  :referencesPerson ex:person-jim-rogers ;
+  :hasRole ex:role-interviewee .
+
+ex:ref-robina-mapstone-rogers-interview a :ReferenceAsObject ;
+  :hasNameInSourceAs "Robina Mapstone" ;
+  :referencesPerson ex:person-robina-mapstone ;
+  :hasRole ex:role-interviewer .
+
+# Factoid related to Jean Sammet
+ex:factoid-jean-sammet-present-at-rogers-interview-1973 a :EventFactoid ;
+  :hasEventName "Jim Rogers oral history interview" ;
+  :occurredOn ex:dr-1973-11-11 ;
+  :hasReference ex:ref-jean-sammet-rogers-interview ,
+                ex:ref-jim-rogers-rogers-interview ,
+                ex:ref-robina-mapstone-rogers-interview ;
+  :sourcedFrom ex:citation-cohc-rogers-1973 .

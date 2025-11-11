@@ -1,0 +1,42 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@prefix ex: <http://example.org/fpo/> .
+
+ex:person.jeanSammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+ex:role.author a :Role ;
+  :hasRoleName "author" .
+
+ex:ref.jeanSammet.author a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :referencesPerson ex:person.jeanSammet ;
+  :hasRole ex:role.author .
+
+ex:date.1968 a :Date ;
+  :hasYear 1968 .
+
+ex:dr.1968 a :DateRangeTEI ;
+  :isFrom ex:date.1968 ;
+  :isTo ex:date.1968 ;
+  :hasTextualDescription "1968" .
+
+ex:source.transcriptSnippet a :Source ;
+  :hasSourceName "Interview/transcript mentioning IBM corporate archive and Jean Sammet" .
+
+ex:cit.transcript.p48 a :SourceCitation ;
+  :fromSource ex:source.transcriptSnippet ;
+  :hasPlaceInSource "p. 48" .
+
+ex:factoid.sammetAuthorship1968 a :EventFactoid ;
+  :hasEventName "Authored a work on the history of programming languages" ;
+  :hasReference ex:ref.jeanSammet.author ;
+  :occurredOn ex:dr.1968 ;
+  :sourcedFrom ex:cit.transcript.p48 .

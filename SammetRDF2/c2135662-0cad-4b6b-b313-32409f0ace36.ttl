@@ -1,0 +1,46 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@prefix ex: <http://example.org/fpo-data/> .
+
+ex:person_jean_sammet rdf:type :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+ex:person_unknown_speaker rdf:type :Person ;
+  :hasDisplayName "Unknown speaker (interviewee)" .
+
+ex:role_opponent rdf:type :Role ;
+  :hasRoleName "opponent of picture clause" .
+
+ex:role_proponent rdf:type :Role ;
+  :hasRoleName "proponent of picture clause" .
+
+ex:ref_jean_sammet_opponent rdf:type :PersonReference ;
+  :referencesPerson ex:person_jean_sammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:role_opponent .
+
+ex:ref_speaker_proponent rdf:type :PersonReference ;
+  :referencesPerson ex:person_unknown_speaker ;
+  :hasNameInSourceAs "Unknown speaker" ;
+  :hasRole ex:role_proponent .
+
+ex:source_doc1 rdf:type :Source ;
+  :hasSourceID "doc1" ;
+  :hasSourceName "Interview transcript (unknown)" .
+
+ex:citation_doc1 rdf:type :SourceCitation ;
+  :fromSource ex:source_doc1 ;
+  :hasPlaceInSource "p. 38 (context: 'Jean Sammet did not want it' re: COBOL picture clause)" .
+
+ex:factoid_picclause_debate rdf:type :EventFactoid ;
+  :hasEventName "COBOL picture clause debate" ;
+  :hasReference ex:ref_jean_sammet_opponent ,
+                ex:ref_speaker_proponent ;
+  :sourcedFrom ex:citation_doc1 .

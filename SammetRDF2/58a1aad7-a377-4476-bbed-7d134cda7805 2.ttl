@@ -1,0 +1,89 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@prefix ex: <http://example.org/fpo/> .
+
+# Persons, groups, institutions
+ex:jeanSammet a :FemalePerson ;
+  :hasDisplayName "Jean Sammet" .
+
+ex:ibmASL a :Institution ;
+  :hasDisplayName "IBM Applied Science Laboratory" .
+
+ex:mitTimesharingTeam a :Group ;
+  :hasDisplayName "MIT time-sharing research team" .
+
+# Source and citation
+ex:src1 a :FRBRSource ;
+  :hasSourceID "norberg-corbato-interview-excerpt" ;
+  :hasSourceName "Interview transcript (Norberg–Corbató)" .
+
+ex:cit1 a :SourceCitation ;
+  :fromSource ex:src1 ;
+  :hasPlaceInSource "p. 24" .
+
+# Roles used in references
+ex:roleAffiliatedWith a :Role ; :hasRoleName "affiliated-with" .
+ex:roleInstitution a :Role ; :hasRoleName "institution" .
+ex:roleSupporter a :Role ; :hasRoleName "supporter" .
+ex:roleSupportedEntity a :Role ; :hasRoleName "object-of-support" .
+ex:roleNotPayingAttention a :Role ; :hasRoleName "not-paying-close-attention" .
+ex:roleObjectOfAttention a :Role ; :hasRoleName "object-of-attention" .
+
+# Date range for state-of-affairs (as indicated in the text)
+ex:dr_ctssEra a :DateRange ;
+  :hasTextualDescription "during CTSS development (early 1960s)" .
+
+# Factoid A: Jean Sammet was affiliated with IBM Applied Science Laboratory
+ex:factoidAffiliation a :StatusFactoid ;
+  :sourcedFrom ex:cit1 ;
+  :dateForAssertion ex:dr_ctssEra ;
+  :hasReference ex:refSammetAff_Subj, ex:refIbmAslAff_Obj .
+
+ex:refSammetAff_Subj a :ReferenceAsSubject ;
+  :referencesPerson ex:jeanSammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:roleAffiliatedWith .
+
+ex:refIbmAslAff_Obj a :ReferenceAsObject ;
+  :referencesPerson ex:ibmASL ;
+  :hasNameInSourceAs "Applied Science Laboratory" ;
+  :hasRole ex:roleInstitution .
+
+# Factoid B: Jean Sammet was supportive of the MIT time-sharing research team
+ex:factoidSupportive a :RelationshipFactoid ;
+  :sourcedFrom ex:cit1 ;
+  :dateForAssertion ex:dr_ctssEra ;
+  :hasReference ex:refSammetSupport_Subj, ex:refMitTeamSupport_Obj .
+
+ex:refSammetSupport_Subj a :ReferenceAsSubject ;
+  :referencesPerson ex:jeanSammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:roleSupporter .
+
+ex:refMitTeamSupport_Obj a :ReferenceAsObject ;
+  :referencesPerson ex:mitTimesharingTeam ;
+  :hasNameInSourceAs "we" ;
+  :hasRole ex:roleSupportedEntity .
+
+# Factoid C: Jean Sammet was not paying close attention to the MIT time-sharing work
+ex:factoidNotPayingAttention a :RelationshipFactoid ;
+  :sourcedFrom ex:cit1 ;
+  :dateForAssertion ex:dr_ctssEra ;
+  :hasReference ex:refSammetNoAttention_Subj, ex:refMitTeamNoAttention_Obj .
+
+ex:refSammetNoAttention_Subj a :ReferenceAsSubject ;
+  :referencesPerson ex:jeanSammet ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole ex:roleNotPayingAttention .
+
+ex:refMitTeamNoAttention_Obj a :ReferenceAsObject ;
+  :referencesPerson ex:mitTimesharingTeam ;
+  :hasNameInSourceAs "us" ;
+  :hasRole ex:roleObjectOfAttention .

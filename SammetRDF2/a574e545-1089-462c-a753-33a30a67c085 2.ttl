@@ -1,0 +1,78 @@
+@prefix : <https://github.com/johnBradley501/FPO/raw/master/fpo.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cidoc: <http://erlangen-crm.org/current/> .
+@prefix frbroo: <http://www.ifla.org/files/assets/cataloguing/FRBRoo/frbroo_v_2.4.pdf#> .
+@base <https://github.com/johnBradley501/FPO/raw/master/fpo.owl> .
+
+# Persons and Institution mentioned
+:person_JeanSammet a :Person ;
+  :hasDisplayName "Jean Sammet" .
+
+:person_CharlotteScott a :Person ;
+  :hasDisplayName "Charlotte Scott" .
+
+:org_IBM a :Institution ;
+  :hasDisplayName "IBM" .
+
+# Source and citation
+:source_KeetFranaInterview a :Source ;
+  :hasSourceID "KeetFranaInterview" ;
+  :hasSourceName "Keet/Frana Interview" .
+
+:cit_KeetFrana_p22 a :SourceCitation ;
+  :fromSource :source_KeetFranaInterview ;
+  :hasPlaceInSource "Page 22" .
+
+# Roles
+:role_subject a :Role ; :hasRoleName "subject" .
+:role_organization a :Role ; :hasRoleName "organization" .
+:role_comparator a :Role ; :hasRoleName "comparator" .
+:role_topicOrganization a :Role ; :hasRoleName "topic-organization" .
+:role_evidence a :Role ; :hasRoleName "evidence" .
+
+# References for Factoid 1 (Sammet not in very high reaches of IBM)
+:ref_JS_subject_p22 a :ReferenceAsSubject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_subject ;
+  :referencesPerson :person_JeanSammet .
+
+:ref_IBM_object_p22 a :ReferenceAsObject ;
+  :hasNameInSourceAs "IBM" ;
+  :hasRole :role_organization ;
+  :referencesPerson :org_IBM .
+
+:ref_CS_object_p22 a :ReferenceAsObject ;
+  :hasNameInSourceAs "Charlotte Scott" ;
+  :hasRole :role_comparator ;
+  :referencesPerson :person_CharlotteScott .
+
+# Factoid 1: Assertion that Jean Sammet did not make it into the very high reaches of IBM
+:factoid_JS_notHighReachesIBM a :StatusFactoid ;
+  :hasReference :ref_JS_subject_p22 , :ref_IBM_object_p22 , :ref_CS_object_p22 ;
+  :sourcedFrom :cit_KeetFrana_p22 .
+
+# References for Factoid 2 (inferred/claimed barrier at IBM, with Sammet as evidence)
+:ref_IBM_topic_p22 a :ReferenceAsSubject ;
+  :hasNameInSourceAs "IBM" ;
+  :hasRole :role_topicOrganization ;
+  :referencesPerson :org_IBM .
+
+:ref_JS_evidence_p22 a :ReferenceAsObject ;
+  :hasNameInSourceAs "Jean Sammet" ;
+  :hasRole :role_evidence ;
+  :referencesPerson :person_JeanSammet .
+
+:ref_CS_evidence_p22 a :ReferenceAsObject ;
+  :hasNameInSourceAs "Charlotte Scott" ;
+  :hasRole :role_evidence ;
+  :referencesPerson :person_CharlotteScott .
+
+# Factoid 2: Keet’s statement suggesting a barrier/glass ceiling at IBM, using Sammet (and Scott) as evidence
+:factoid_IBM_barrier_inferred a :StatusFactoid ;
+  :hasReference :ref_IBM_topic_p22 , :ref_JS_evidence_p22 , :ref_CS_evidence_p22 ;
+  :sourcedFrom :cit_KeetFrana_p22 .
